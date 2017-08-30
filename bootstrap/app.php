@@ -10,6 +10,7 @@ $app = new \Slim\App([
       'displayErrorDetails' => true,
   ]
 ]);
+
 $container = $app->getContainer();
 $container['view'] = function ($container){
     $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views', [
@@ -21,6 +22,8 @@ $container['view'] = function ($container){
     ));
     return $view;
 };
-
+$container['HomeController'] = function($container){
+    return new \App\controllers\HomeController($container);
+};
 
 require __DIR__.'/../app/routes.php';
