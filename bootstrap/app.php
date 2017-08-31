@@ -40,8 +40,14 @@ $container['view'] = function ($container){
     ));
     return $view;
 };
+$container['Validator'] = function ($container){
+    return new App\Validation\Validator($container);
+};
 $container['HomeController'] = function($container){
     return new \App\controllers\HomeController($container);
+};
+$container['AuthController'] = function($container){
+    return new \App\controllers\Auth\AuthController($container);
 };
 
 require __DIR__.'/../app/routes.php';

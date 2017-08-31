@@ -13,7 +13,6 @@ class User Extends Model{
 		'name',
 		'email',
 		'password',
-		'salt',
 		'active',
     'active_hash',
     'recover_hash',
