@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="{{base_url() }}/../resources/css/app.css">
     </head>
     <body>
-
+      {%include 'templates/partials/navigation.twig' %}
     <div class="container">
-        {%include 'templates/partials/navigation.twig' %}
+        {%include 'templates/partials/flash.twig' %}
          {% block content %} {% endblock %}
     </div>
 

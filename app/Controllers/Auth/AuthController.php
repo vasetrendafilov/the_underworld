@@ -6,6 +6,13 @@ use App\Controllers\Controller;
 
 class AuthController extends Controller
 {
+  public function getSignOut($request, $response)
+  {
+    $this->auth->logout();
+    $this->flash->addMessage('info','You are singed out');
+    return $response->withRedirect($this->router->pathFor('home'));
+
+  }
   public function getSignUp($request, $response)
   {
       return $this->view->render($response, 'auth/signup.twig');
@@ -30,6 +37,7 @@ class AuthController extends Controller
         'email'    => $email,
         'password' => password_hash($password, PASSWORD_DEFAULT),
         ]);
+        $this->flash->addMessage('info','You are singed up');
         return $response->withRedirect($this->router->pathFor('home'));
       }else {
         return $this->view->render($response, 'auth/signup.twig',[
@@ -37,5 +45,23 @@ class AuthController extends Controller
           'request' => $request->getParams()
         ]);
       }
+  }
+  public function getSignIn($request, $response)
+  {
+      return $this->view->render($response, 'auth/signin.twig');
+  }
+  public function postSignIn($request, $response)
+  {
+    $username = $request->getParam('username');
+    $password = $request->getParam('password');
+
+    $auth = $this->auth->attempt($username, $password);
+    if(!$auth){
+      $this->flash->addMessage('error','Could not sign uoy in');
+       return $response->withRedirect($this->router->pathFor('auth.signin'));
+    }
+    $this->flash->addMessage('info','You are singed in.');
+    return $response->withRedirect($this->router->pathFor('home'));
+
   }
 }
