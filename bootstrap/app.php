@@ -30,6 +30,9 @@ $capsule->bootEloquent();
 $container['db'] = function ($container) use ($capsule){
     return $capsule;
 };
+$container['csrf'] = function ($c){
+    return new Slim\Csrf\Guard;
+};
 $container['view'] = function ($container){
     $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views', [
         'cache' => false,
@@ -38,6 +41,7 @@ $container['view'] = function ($container){
         $container->router,
         $container->request->getUri()
     ));
+    $view->addExtension(new \App\Views\CsrfExtension($container['csrf']));
     return $view;
 };
 $container['Validator'] = function ($container){
@@ -49,5 +53,7 @@ $container['HomeController'] = function($container){
 $container['AuthController'] = function($container){
     return new \App\controllers\Auth\AuthController($container);
 };
+
+$app->add($container->get('csrf'));
 
 require __DIR__.'/../app/routes.php';
