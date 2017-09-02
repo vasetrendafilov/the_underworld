@@ -21,12 +21,14 @@ class AuthController extends Controller
   {
       $username = $request->getParam('username');
       $email = $request->getParam('email');
+      $name = $request->getParam('name');
       $password = $request->getParam('password');
       $password_confirm = $request->getParam('password_confirm');
 
       $v = $this->Validator->validate([
-        'email' => [$email,'required|email|uniqueEmail'],
         'username' => [$username,'required|alnumDash|max(20)|uniqueUsername'],
+        'email' => [$email,'required|email|uniqueEmail'],
+        'name'  => [$name,'required|min(10)'],
         'password' => [$password,'required|min(6)'],
         'password_confirm' => [$password_confirm,'required|matches(password)'],
       ]);
@@ -35,8 +37,16 @@ class AuthController extends Controller
         $user = User::create([
         'username' => $username,
         'email'    => $email,
+        'name'     => $name,
         'password' => password_hash($password, PASSWORD_DEFAULT),
         ]);
+
+        $this->Mail->send(
+        $user->email,
+        'Thanks for registering here\'s you\'re activation link',
+        file_get_contents(__DIR__.'/../../resources/email/auth/registered.php')
+        );
+
         $this->flash->addMessage('info','You are singed up');
         return $response->withRedirect($this->router->pathFor('home'));
       }else {

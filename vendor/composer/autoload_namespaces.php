@@ -10,5 +10,4 @@ return array(
     'SecurityLib' => array($vendorDir . '/ircmaxell/security-lib/lib'),
     'RandomLib' => array($vendorDir . '/ircmaxell/random-lib/lib'),
     'Pimple' => array($vendorDir . '/pimple/pimple/src'),
-    'Mailgun' => array($vendorDir . '/mailgun/mailgun-php/src'),
 );

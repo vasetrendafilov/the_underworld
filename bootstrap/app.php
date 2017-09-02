@@ -1,5 +1,8 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 session_cache_limiter(false);
 session_start();
 
@@ -9,7 +12,7 @@ $app = new \Slim\App([
   'settings'=>[
       'displayErrorDetails' => true,
   ],
-  'db'=> [
+  'db'=>[
       'driver'=>'mysql',
       'host'=>'localhost',
       'database'=>'site',
@@ -17,6 +20,15 @@ $app = new \Slim\App([
       'password'=>'',
       'collation'=>'utf_unicode_ci',
       'prefix'=>''
+  ],
+  'mail'=>[
+    'smtp_debug'=>2,
+    'host'=>'smtp.gmail.com',
+    'smtp_auth'=> true,
+    'username'=>'drzava.mk@gmail.com',
+    'password'=>'Vase0137',
+    'smtp_secure'=>'tls',
+    'port'=> 587
   ]
 ]);
 
@@ -57,14 +69,29 @@ $container['view'] = function ($container){
 
     return $view;
 };
+
 $container['Validator'] = function ($container){
     return new App\Validation\Validator($container);
 };
 $container['HomeController'] = function($container){
-    return new \App\controllers\HomeController($container);
+    return new \App\Controllers\HomeController($container);
 };
 $container['AuthController'] = function($container){
-    return new \App\controllers\Auth\AuthController($container);
+    return new \App\Controllers\Auth\AuthController($container);
+};
+$container['Mail'] = function($container){
+  $mailer = new PHPMailer;
+  $mailer->SMTPDebug =  $container['mail']['smtp_debug'];
+  $mailer->isSMTP();
+  $mailer->Host =       $container['mail']['host'];
+  $mailer->SMTPAuth =   $container['mail']['smtp_auth'];
+  $mailer->Username =   $container['mail']['username'];
+  $mailer->Password =   $container['mail']['password'];
+  $mailer->SMTPSecure = $container['mail']['smtp_secure'];
+  $mailer->Port =       $container['mail']['port'];
+  $mailer->setFrom('drzava.mk@gmail.com');
+  $mailer->isHTML(true);
+  return new App\Mail\Mailer($mailer);
 };
 
 $app->add($container->get('csrf'));
