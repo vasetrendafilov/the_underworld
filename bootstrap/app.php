@@ -51,6 +51,13 @@ $container['auth'] = function ($container){
 $container['flash'] = function ($container){
     return new \Slim\Flash\Messages;
 };
+$container['randomlib'] = function ($container){
+    $randomlib = new RandomLib\Factory;
+    return $randomlib->getMediumStrengthGenerator();
+};
+$container['hash'] = function ($container){
+    return new \App\Helpers\Hash($container);
+};
 $container['view'] = function ($container){
     $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views', [
         'cache' => false,
@@ -91,7 +98,7 @@ $container['Mail'] = function($container){
   $mailer->Port =       $container['mail']['port'];
   $mailer->setFrom('drzava.mk@gmail.com');
   $mailer->isHTML(true);
-  return new App\Mail\Mailer($mailer);
+  return new App\Mail\Mailer($container['view'], $mailer);
 };
 
 $app->add($container->get('csrf'));

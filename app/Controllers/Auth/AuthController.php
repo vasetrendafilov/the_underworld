@@ -35,17 +35,18 @@ class AuthController extends Controller
 
       if ($v->passes()){
         $user = User::create([
-        'username' => $username,
-        'email'    => $email,
-        'name'     => $name,
-        'password' => password_hash($password, PASSWORD_DEFAULT),
+        'username'    => $username,
+        'email'       => $email,
+        'name'        => $name,
+        'password'    => password_hash($password, PASSWORD_DEFAULT),
+        'active'      => false,
+        'active_hash' => $this->hash->hash($this->randomlib->generateString(128))
         ]);
 
-        $this->Mail->send(
-        $user->email,
-        'Thanks for registering here\'s you\'re activation link',
-        file_get_contents(__DIR__.'/../../resources/email/auth/registered.php')
-        );
+        $this->Mail->send('email/auth/registered.php',['user' => $user],function($message) use ($user){
+          $message->to($user->email);
+          $message->subject('thanke for regestering');
+        });
 
         $this->flash->addMessage('info','You are singed up');
         return $response->withRedirect($this->router->pathFor('home'));

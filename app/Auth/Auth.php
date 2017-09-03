@@ -13,7 +13,7 @@ class Auth{
 
 	}
 	public function attempt($username, $password){
-		$user = User::where('username', $username)->first();
+		$user = User::where('username', $username)->where('active', true)->first();
 		if(!$user){
 			return false;
 		}
