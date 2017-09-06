@@ -11,6 +11,7 @@ require __DIR__.'/../vendor/autoload.php';
 $app = new \Slim\App([
   'settings'=>[
       'displayErrorDetails' => true,
+      'baseUrl' => 'http://localhost'
   ],
   'db'=>[
       'driver'=>'mysql',
@@ -46,7 +47,7 @@ $container['csrf'] = function ($c){
     return new Slim\Csrf\Guard;
 };
 $container['auth'] = function ($container){
-    return new \App\Auth\Auth;
+    return new \App\Auth\Auth($container);
 };
 $container['flash'] = function ($container){
     return new \Slim\Flash\Messages;
@@ -102,5 +103,6 @@ $container['Mail'] = function($container){
 };
 
 $app->add($container->get('csrf'));
+$app->add(new \App\Middleware\BeforeMiddleware($container));
 
 require __DIR__.'/../app/routes.php';

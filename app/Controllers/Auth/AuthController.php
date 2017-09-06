@@ -3,9 +3,30 @@
 namespace App\Controllers\Auth;
 use App\Models\User;
 use App\Controllers\Controller;
-
+use Carbon\Carbon;
 class AuthController extends Controller
 {
+  public function getActivate($request, $response)
+  {
+    $email = $request->getParam('email');
+    $active_string = $request->getParam('active_string');
+    $active_hash = $this->hash->hash($active_string);
+    $user = User::where('email',$email)
+     ->where('active', false)->first();
+    if(!$user || $this->hash->hashCheck($user->active_hash, $active_hash))
+    {
+      $this->flash->addMessage('error','We could not activate you\'re acount ');
+      return $response->withRedirect($this->router->pathFor('home'));
+    }else {
+      $user->update([
+        'active' => true,
+        'active_hash' => null
+      ]);
+      $this->flash->addMessage('info','You\'re acount is activated you can sing in');
+      return $response->withRedirect($this->router->pathFor('auth.signin'));
+    }
+
+  }
   public function getSignOut($request, $response)
   {
     $this->auth->logout();
@@ -34,16 +55,17 @@ class AuthController extends Controller
       ]);
 
       if ($v->passes()){
+        $active_string = $this->randomlib->generateString(128);
         $user = User::create([
         'username'    => $username,
         'email'       => $email,
         'name'        => $name,
         'password'    => password_hash($password, PASSWORD_DEFAULT),
         'active'      => false,
-        'active_hash' => $this->hash->hash($this->randomlib->generateString(128))
+        'active_hash' => $this->hash->hash($active_string)
         ]);
 
-        $this->Mail->send('email/auth/registered.php',['user' => $user],function($message) use ($user){
+        $this->Mail->send('email/auth/activate.twig',['user' => $user, 'active_string' => $active_string, 'baseUrl' => $this->container['settings']['baseUrl'] ],function($message) use ($user){
           $message->to($user->email);
           $message->subject('thanke for regestering');
         });
@@ -65,12 +87,14 @@ class AuthController extends Controller
   {
     $username = $request->getParam('username');
     $password = $request->getParam('password');
+    $remember = $request->getParam('remember');
 
-    $auth = $this->auth->attempt($username, $password);
+    $auth = $this->auth->attempt($username, $password, $remember);
     if(!$auth){
-      $this->flash->addMessage('error','Could not sign uoy in');
+      $this->flash->addMessage('error','Could not sign you in');
        return $response->withRedirect($this->router->pathFor('auth.signin'));
     }
+
     $this->flash->addMessage('info','You are singed in.');
     return $response->withRedirect($this->router->pathFor('home'));
 
