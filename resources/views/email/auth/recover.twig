@@ -1,0 +1,5 @@
+{% extends 'email/templates/default.twig' %}
+{% block content %}
+Recover you're password with this link:
+{{baseUrl}}{{path_for('reset.password')}}?email={{user.email}}&recoverHash={{recoverHash | url_encode}}
+{% endblock %}

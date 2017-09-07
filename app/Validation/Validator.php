@@ -19,6 +19,9 @@ class Validator extends Violin
           'uniqueUsername' => 'That username i already taken'
         ]
       ]);
+      $this->addRuleMessages([
+        'checkPassword' => 'That dosent match you`re curent password'
+      ]);
   }
   public function validate_uniqueEmail($value, $input , $args)
   {
@@ -30,5 +33,14 @@ class Validator extends Violin
     $user = User::where('username',$value);
     return ! (bool) $user->count();
   }
-  
+  public function validate_checkPassword($value, $input , $args)
+  {
+    $user = User::where('id', $_SESSION['user'])->first();
+    if(password_verify($value, $user->password)){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
 }

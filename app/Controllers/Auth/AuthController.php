@@ -13,7 +13,7 @@ class AuthController extends Controller
     $active_hash = $this->hash->hash($active_string);
     $user = User::where('email',$email)
      ->where('active', false)->first();
-    if(!$user || $this->hash->hashCheck($user->active_hash, $active_hash))
+    if(!$user || !$this->hash->hashCheck($user->active_hash, $active_hash))
     {
       $this->flash->addMessage('error','We could not activate you\'re acount ');
       return $response->withRedirect($this->router->pathFor('home'));

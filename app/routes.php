@@ -15,10 +15,19 @@ $app->group('',function() use ($app){
 
   $app->get('/activate', 'AuthController:getActivate')->setName('activate');
 
+  $app->get('/recover-password', 'UserController:getRecoverPassword')->setName('recover.password');
+  $app->post('/recover-password', 'UserController:postRecoverPassword');
+
+  $app->get('/reset-password', 'UserController:getResetPassword')->setName('reset.password');
+  $app->post('/reset-password', 'UserController:postResetPassword');
+
 })->add(new GuestMiddleware($container));
 
 $app->group('',function() use ($app){
 
   $app->get('/auth/signout', 'AuthController:getSignOut')->setName('auth.signout');
+
+  $app->get('/changePassword', 'UserController:getChangePassword')->setName('changePassword');
+  $app->post('/changePassword', 'UserController:postChangePassword');
 
 })->add(new AuthMiddleware($container));

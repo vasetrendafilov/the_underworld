@@ -87,6 +87,9 @@ $container['HomeController'] = function($container){
 $container['AuthController'] = function($container){
     return new \App\Controllers\Auth\AuthController($container);
 };
+$container['UserController'] = function($container){
+    return new \App\Controllers\UserController($container);
+};
 $container['Mail'] = function($container){
   $mailer = new PHPMailer;
   $mailer->SMTPDebug =  $container['mail']['smtp_debug'];
