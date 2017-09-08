@@ -7,52 +7,47 @@ class Auth
 {
 	protected $container;
 
-	public function __construct($container)
-	{
-			$this->container = $container;
+	public function __construct($container){
+		$this->container = $container;
+	}
+	public function __get($property){
+		if($this->container->{$property}){
+			return $this->container->{$property};
+		}
 	}
 	public function user(){
-		if(isset($_SESSION['user'])){
-		return User::find($_SESSION['user']);
-	}
+		if(isset($_SESSION[$this->config['auth.session'] ])){
+		  return User::find($_SESSION[$this->config['auth.session']]);
+	  }
 	}
 	public function check(){
-		return isset($_SESSION['user']);
-
+		return isset($_SESSION[$this->config['auth.session']]);
 	}
-	public function attempt($username, $password, $remember){
+	public function attempt($username, $password, $remember)
+	{
 		$user = User::where('username', $username)->where('active', true)->first();
 		if(!$user){
 			return false;
 		}
 		if(password_verify($password, $user->password)){
 			if($remember === 'on'){
-				$rememberIdentifier = $this->container->randomlib->generateString(128);
-				$rememberToken = $this->container->randomlib->generateString(128);
-				$user->update([
-					'remember_identifier' => $rememberIdentifier,
-					'remember_token'      => $this->container->hash->hash($rememberToken)
-				]);
-				setcookie('user_r', "{$rememberIdentifier}___{$rememberToken}", Carbon::parse('+1 week ')->timestamp,'/');
+				$rememberIdentifier = $this->randomlib->generateString(128);
+				$rememberToken = $this->randomlib->generateString(128);
+				$user->updateRememberCredentials($rememberIdentifier, $this->hash->hash($rememberToken));
+				setcookie($this->config['auth.remember'], "{$rememberIdentifier}___{$rememberToken}", Carbon::parse('+1 week ')->timestamp,'/');
       }
-			$_SESSION['user'] = $user->id;
+			$_SESSION[$this->config['auth.session']] = $user->id;
 			return true;
 		}
-		  return false;
 	}
 	public function logout()
 	{
-		if(isset($_COOKIE['user_r'])){
-			//$this->user()->removeRememberCredentials();
-      $user = User::where('id',$_SESSION['user'])->first();
-			$user->update([
-				'remember_identifier' => null,
-				'remember_token'      => null
-			]);
-			setcookie('user_r', null, 1, "/", null);
-			unset($_SESSION['user']);
+		if(isset($_COOKIE[$this->config['auth.remember']])){
+      $this->user()->removeRememberCredentials();
+			setcookie($this->config['auth.remember'], null, 1, "/", null);
+			unset($_SESSION[$this->config['auth.session']]);
 		}else{
-			unset($_SESSION['user']);
+			unset($_SESSION[$this->config['auth.session']]);
 		}
 	}
 }

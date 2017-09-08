@@ -1,5 +1,7 @@
 <?php
 
+use App\Middleware\BeforeMiddleware;
+use Noodlehaus\Config;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -10,33 +12,17 @@ require __DIR__.'/../vendor/autoload.php';
 
 $app = new \Slim\App([
   'settings'=>[
-      'displayErrorDetails' => true,
-      'baseUrl' => 'http://localhost'
-  ],
-  'db'=>[
-      'driver'=>'mysql',
-      'host'=>'localhost',
-      'database'=>'site',
-      'username'=>'root',
-      'password'=>'',
-      'collation'=>'utf_unicode_ci',
-      'prefix'=>''
-  ],
-  'mail'=>[
-    'smtp_debug'=>2,
-    'host'=>'smtp.gmail.com',
-    'smtp_auth'=> true,
-    'username'=>'drzava.mk@gmail.com',
-    'password'=>'Vase0137',
-    'smtp_secure'=>'tls',
-    'port'=> 587
+      'displayErrorDetails' => true
   ]
 ]);
 
 $container = $app->getContainer();
+$container['config'] = function () {
+  return Config::load(__DIR__.'/Config/development.json');
+};
 
 $capsule = new \Illuminate\Database\Capsule\Manager;
-$capsule->addConnection($container['db']);
+$capsule->addConnection($container->config['db']);
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
@@ -74,7 +60,7 @@ $container['view'] = function ($container){
             'user' =>$container->auth->user(),
         ]);
     $view->getEnvironment()->addGlobal('flash', $container->flash);
-
+    $view->getEnvironment()->addGlobal('baseUrl', $container->config['app.baseUrl']);
     return $view;
 };
 
@@ -92,20 +78,20 @@ $container['UserController'] = function($container){
 };
 $container['Mail'] = function($container){
   $mailer = new PHPMailer;
-  $mailer->SMTPDebug =  $container['mail']['smtp_debug'];
+  $mailer->SMTPDebug =  $container->config['mail.smtp_debug'];
   $mailer->isSMTP();
-  $mailer->Host =       $container['mail']['host'];
-  $mailer->SMTPAuth =   $container['mail']['smtp_auth'];
-  $mailer->Username =   $container['mail']['username'];
-  $mailer->Password =   $container['mail']['password'];
-  $mailer->SMTPSecure = $container['mail']['smtp_secure'];
-  $mailer->Port =       $container['mail']['port'];
+  $mailer->Host =       $container->config['mail.host'];
+  $mailer->SMTPAuth =   $container->config['mail.smtp_auth'];
+  $mailer->Username =   $container->config['mail.username'];
+  $mailer->Password =   $container->config['mail.password'];
+  $mailer->SMTPSecure = $container->config['mail.smtp_secure'];
+  $mailer->Port =       $container->config['mail.port'];
   $mailer->setFrom('drzava.mk@gmail.com');
   $mailer->isHTML(true);
   return new App\Mail\Mailer($container['view'], $mailer);
 };
 
 $app->add($container->get('csrf'));
-$app->add(new \App\Middleware\BeforeMiddleware($container));
+$app->add(new BeforeMiddleware($container));
 
 require __DIR__.'/../app/routes.php';

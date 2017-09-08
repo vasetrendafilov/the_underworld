@@ -38,6 +38,10 @@ class ComposerStaticInitcffdc2e7cdc5fe59040200d3d98756f9
             'Psr\\Container\\' => 14,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
+        'N' => 
+        array (
+            'Noodlehaus\\' => 11,
+        ),
         'I' => 
         array (
             'Interop\\Container\\' => 18,
@@ -112,6 +116,10 @@ class ComposerStaticInitcffdc2e7cdc5fe59040200d3d98756f9
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'Noodlehaus\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hassankhan/config/src',
         ),
         'Interop\\Container\\' => 
         array (

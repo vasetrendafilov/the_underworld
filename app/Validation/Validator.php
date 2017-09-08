@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Validation;
 
 use Violin\Violin;
@@ -35,12 +36,7 @@ class Validator extends Violin
   }
   public function validate_checkPassword($value, $input , $args)
   {
-    $user = User::where('id', $_SESSION['user'])->first();
-    if(password_verify($value, $user->password)){
-      return true;
-    }else{
-      return false;
-    }
+    $user = $this->container->auth->user();
+    return password_verify($value, $user->password);
   }
-
 }

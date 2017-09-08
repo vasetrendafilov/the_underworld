@@ -1,5 +1,5 @@
 {% extends 'email/templates/default.twig' %}
 {% block content %}
 Activate youre acc with this link:
-{{baseUrl}}{{path_for('activate')}}?email={{user.email}}&active_string={{active_string | url_encode}}
+{{baseUrl}}{{path_for('activate')}}?email={{user.email}}&activate={{activate | url_encode}}
 {% endblock %}

@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Model;
 
-class User Extends Model{
-
+class User Extends Model
+{
 	protected $table = "users";
 
 	protected $fillable = [
@@ -19,5 +18,17 @@ class User Extends Model{
     'remember_identifier',
     'remember_token'
 	];
-
+	public function permissions(){
+		return $this->hasMany('App\Models\UserPermissions');
+	}
+	public function updateRememberCredentials($identifier, $token)
+	{
+		$this->update([
+			'remember_identifier' => $identifier,
+			'remember_token'      => $token
+		]);
+	}
+	public function removeRememberCredentials(){
+		$this->updateRememberCredentials(null, null);
+	}
 }

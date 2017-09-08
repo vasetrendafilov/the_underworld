@@ -7,7 +7,7 @@ class Hash
   protected $container;
 
   public function __construct($container){
-     $this->container= $container;
+    $this->container= $container;
   }
   public function hash($input){
     return hash('sha256', $input);

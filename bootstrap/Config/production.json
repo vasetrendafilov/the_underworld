@@ -1,0 +1,31 @@
+{
+  "app":{
+    "baseUrl" : "http://mktechportal.con.mk/",
+    "hash":{
+      "algo": "PASSWORD_BCRYPT",
+      "cost": 10
+    }
+  },
+  "db":{
+    "driver":"mysql",
+    "host":"sql103.con.mk",
+    "database":"mkd_18989075_vase",
+    "username":"mkd_18989075",
+    "password":"joker11",
+    "collation":"utf_unicode_ci",
+    "prefix":""
+  },
+  "mail":{
+    "smtp_debug": 2,
+    "host": "smtp.gmail.com",
+    "smtp_auth": true,
+    "username": "drzava.mk@gmail.com",
+    "password": "Vase0137",
+    "smtp_secure": "tls",
+    "port": 587
+  },
+  "auth":{
+   "session": "user_id",
+   "remember": "user_r"
+  }
+}
