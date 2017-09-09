@@ -14,7 +14,7 @@ class BeforeMiddleware extends Middleware
 	protected function checkRememberMe()
 	{
     $user = $this->auth->user();
-		if(isset($_COOKIE[$this->config['auth.remember']) && !$user)
+		if(isset($_COOKIE[$this->config['auth.remember']]) && !$user)
 		{
 			$data = $_COOKIE[$this->config['auth.remember']];
 			$credentials = explode('___', $data);

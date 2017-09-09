@@ -21,6 +21,10 @@ class User Extends Model
 	public function permissions(){
 		return $this->hasMany('App\Models\UserPermissions');
 	}
+	public function profile(){
+		return $this->hasMany('App\Models\UserProfile');
+	}
+
 	public function updateRememberCredentials($identifier, $token)
 	{
 		$this->update([
