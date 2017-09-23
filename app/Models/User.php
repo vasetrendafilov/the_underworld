@@ -12,19 +12,21 @@ class User Extends Model
 		'name',
 		'email',
 		'password',
+		'people',
 		'active',
     'active_hash',
     'recover_hash',
     'remember_identifier',
     'remember_token'
 	];
-	public function permissions(){
-		return $this->hasMany('App\Models\UserPermissions');
+	public function addPerson()
+	{
+		return $this->hasMany('App\Models\People');
 	}
-	public function profile(){
-		return $this->hasMany('App\Models\UserProfile');
+	public function addPayment()
+	{
+		return $this->hasMany('App\Models\Payments');
 	}
-
 	public function updateRememberCredentials($identifier, $token)
 	{
 		$this->update([

@@ -44,25 +44,13 @@ class AuthController extends Controller
     $name = $request->getParam('name');
     $password = $request->getParam('password');
     $password_confirm = $request->getParam('password_confirm');
-    $grad = $request->getParam('grad');
-    $den = $request->getParam('den');
-    $mesec = $request->getParam('mesec');
-    $godina = $request->getParam('godina');
-    $sex = $request->getParam('sex');
-    $nacionalnost = $request->getParam('nacionalnost');
 
     $v = $this->Validator->validate([
       'username' => [$username,'required|alnumDash|max(20)|uniqueUsername'],
       'email' => [$email,'required|email|uniqueEmail'],
       'name'  => [$name,'required|min(10)'],
       'password' => [$password,'required|min(6)'],
-      'password_confirm' => [$password_confirm,'required|matches(password)'],
-      'grad'  => [$grad,'required'],
-      'den'  => [$den,'required'],
-      'mesec'  => [$mesec,'required'],
-      'godina'  => [$godina,'required'],
-      'sex'  => [$sex,'required'],
-      'nacionalnost'  => [$nacionalnost,'required'],
+      'password_confirm' => [$password_confirm,'required|matches(password)']
     ]);
     if ($v->passes()){
       $activate = $this->randomlib->generateString(128);
@@ -73,14 +61,6 @@ class AuthController extends Controller
       'password'    => password_hash($password, PASSWORD_DEFAULT),
       'active'      => false,
       'active_hash' => $this->hash->hash($activate)
-      ]);
-      $user->permissions()->create(UserPermissions::$defaults);
-      $rodenden = "{$godina}-{$mesec}-{$den}";
-      $user->profile()->create([
-      'grad'         =>  $grad,
-      'pol'          =>  $sex ,
-      'nacionalnost' =>  $nacionalnost,
-      'rodenden'     =>  $rodenden
       ]);
 
       $this->Mail->send('email/auth/activate.twig',['user' => $user, 'activate' => $activate],function($message) use ($user){

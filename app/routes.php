@@ -3,7 +3,8 @@
 use App\Middleware\AuthMiddleware;
 use App\Middleware\GuestMiddleware;
 
-$app->get('/', 'HomeController:index')->setName('home');
+$app->get('/', 'HomeController:getPeople')->setName('home');
+$app->post('/', 'HomeController:postPeople');
 
 $app->group('',function() use ($app){
 
@@ -24,6 +25,11 @@ $app->group('',function() use ($app){
 })->add(new GuestMiddleware($container));
 
 $app->group('',function() use ($app){
+
+  $app->get('/ajax/payments', 'AjaxController:getPayments')->setName('ajax-payments');
+
+  $app->get('/payments', 'PaymentsController:getPayments')->setName('payments');
+  $app->post('/payments', 'PaymentsController:postPayments');
 
   $app->get('/auth/signout', 'AuthController:getSignOut')->setName('auth.signout');
 

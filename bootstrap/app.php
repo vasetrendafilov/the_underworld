@@ -70,6 +70,12 @@ $container['Validator'] = function ($container){
 $container['HomeController'] = function($container){
     return new \App\Controllers\HomeController($container);
 };
+$container['PaymentsController'] = function($container){
+    return new \App\Controllers\PaymentsController($container);
+};
+$container['AjaxController'] = function($container){
+    return new \App\Controllers\AjaxController($container);
+};
 $container['AuthController'] = function($container){
     return new \App\Controllers\Auth\AuthController($container);
 };

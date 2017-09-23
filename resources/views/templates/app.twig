@@ -3,16 +3,14 @@
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-      <title>Drzava</title>
-
+    <title>Drzava</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{base_url() }}/../resources/css/app.css">
-     {% block head %} {% endblock %}
+    <link rel="stylesheet" href="/resources/css/main.css">
+    {% block head %} {% endblock %}
     </head>
     <body>
       {%include 'templates/partials/navigation.twig' %}
-    <div id="container" class="container-fluid ">
+    <div id="main" class="container-fluid" style="padding-top:80px;">
         {%include 'templates/partials/flash.twig' %}
          {% block content %} {% endblock %}
     </div>

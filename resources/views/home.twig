@@ -1,4 +1,29 @@
 {%extends 'templates/app.twig'%}
 {% block content %}
-    coming soon!!!!!
+  {% if auth.check %}
+    {% if people is empty %}
+      <p>No people:( </p>
+    {% else %}
+    <div class="card-columns">
+      {% for person in people %}
+        <div class="card bg-light ">
+          <div class="card-body">
+            <h4 class="card-title"> {{person.name}} </h4>
+            <p class="card-text"> {{person.balance}} </p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  <div id="addPeople">
+    <form action="{{path_for('home')}}" method="post" autocomplete="off">
+      <label for="name">Name</label>
+      <input type="text" name="name" id="name"><br />
+      <input type="submit" value="Submit">
+      {{ csrf_field() | raw }}
+    </form>
+  </div>
+  {% else %}
+  nooooooooooooooooooooo?
+  {% endif %}
 {% endblock %}

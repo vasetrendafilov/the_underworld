@@ -1,0 +1,28 @@
+{%extends 'templates/app.twig'%}
+{% block head %}
+  <link rel="stylesheet" href="/resources/css/payments.css">
+{% endblock %}
+{% block content %}
+  <div id="Payments">
+  {% if payments is empty %}
+    <p>No payments </p>
+  {% else %}
+    {% for payment in payments %}
+      <div class="row">
+        <div class="col-sm-8"> {{payment.description}} </div>
+        <div class="col-sm-4"> {{payment.charge}} </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+  </div>
+  <div id="addPayment">
+    <form action="{{path_for('payments')}}" method="post" autocomplete="off">
+      <label for="description">Description</label>
+      <input type="text" name="description" id="description"><br />
+      <label for="value">Value</label>
+      <input type="text" name="charge" id="value"><br />
+      <input type="submit" value="Submit">
+      {{ csrf_field() | raw }}
+    </form>
+  </div>
+{% endblock %}
