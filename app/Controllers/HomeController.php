@@ -8,13 +8,14 @@ class HomeController extends Controller
   public function getPeople($request, $response)
   {
     $people = People::where('user_id', $this->auth->user()->id)->get();
-
     return $this->view->render($response, 'home.twig',[
-      'people' => $people
+      'people' => $people,
+      'expense' => $this->auth->expense()
     ]);
   }
   public function postPeople($request, $response)
   {
+    //not in use
     $name = $request->getParam('name');
 
     $user = $this->auth->user();
@@ -22,7 +23,7 @@ class HomeController extends Controller
       'people' => $user->people + 1
     ]);
     $user->addPerson()->create([
-      'name' => $name,
+      'name' => trim($name),
       'balance' => 0
     ]);
     $this->flash->addMessage('info','You added a person');

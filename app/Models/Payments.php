@@ -9,6 +9,7 @@ class Payments Extends Model
 
 	protected $fillable = [
 		'description',
-    'charge'
+    'charge',
+		'done'
 	];
 }

@@ -27,6 +27,10 @@ $app->group('',function() use ($app){
 $app->group('',function() use ($app){
 
   $app->get('/ajax/payments', 'AjaxController:getPayments')->setName('ajax-payments');
+  $app->get('/ajax/people', 'AjaxController:getPeople')->setName('ajax-people-addMoney');
+  $app->get('/ajax/people/delete', 'AjaxController:getPeopleDelete')->setName('ajax-people-delete');
+  $app->get('/ajax/people/add', 'AjaxController:getPeopleAdd')->setName('ajax-people-add');
+  $app->get('/ajax/people/search', 'AjaxController:getPeopleSearch')->setName('ajax-people-search');
 
   $app->get('/payments', 'PaymentsController:getPayments')->setName('payments');
   $app->post('/payments', 'PaymentsController:postPayments');

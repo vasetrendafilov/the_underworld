@@ -7,9 +7,11 @@ class PaymentsController extends Controller
 {
   public function getPayments($request, $response)
   {
-    $payments = Payments::where('user_id', $this->auth->user()->id)->orderBy('created_at', 'desc')->get();
+    $payments = Payments::where('user_id', $this->auth->user()->id)->orderBy('id', 'desc')->get();
+    $this->auth->paymentsCheck();
     return $this->view->render($response, 'payments.twig',[
-     'payments' => $payments
+     'payments' => $payments,
+     'people' => $this->auth->user()->people
     ]);
   }
   public function postPayments($request, $response)
@@ -17,17 +19,18 @@ class PaymentsController extends Controller
     $description = $request->getParam('description');
     $charge = $request->getParam('charge');
     $v = $this->Validator->validate([
-      'description' => [$description,'required|max(20)'],
+      'description' => [$description,'required|min(10)'],
       'charge' => [$charge,'required|int']
     ]);
     if ($v->passes()){
       $user = $this->auth->user();
       $user->addPayment()->create([
         'description' => $description,
-        'charge' => $charge * $user->people
+        'charge' => $charge,
+        'done' => false
       ]);
         $this->flash->addMessage('info','You added another payment');
-      return $response->withRedirect($this->router->pathFor('payments'));
+      return $response->withRedirect($this->router->pathFor('home'));
     }
   }
 }

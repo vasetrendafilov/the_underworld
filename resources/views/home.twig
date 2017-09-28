@@ -1,29 +1,175 @@
 {%extends 'templates/app.twig'%}
 {% block content %}
   {% if auth.check %}
-    {% if people is empty %}
-      <p>No people:( </p>
-    {% else %}
-    <div class="card-columns">
-      {% for person in people %}
-        <div class="card bg-light ">
+    <div id="showPeople">
+      {% if people is empty %}
+        <p>No people:( </p>
+      {% else %}
+      <div class="card-columns">
+        {% for person in people %}
+          <div class="card bg-light ">
+            <div class="card-body">
+              <button type="button" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="card-title"> {{person.name}} </h4>
+              {% if (expense - person.balance) <= 0 %}
+                <div class="card-text" >Wallet:</div>
+                <div class="card-text"> {{person.balance - expense }} </div>
+              {% else %}
+                <div class="card-text" >Wallet:</div>
+                <div class="card-text"> {{ person.balance }} </div>
+                <div class="card-text" >Treba da doplati:</div>
+                <div class="card-text">{{ expense - person.balance }} </div>
+                <div class="col-lg-6" style="padding-left:0px;">
+                  <div class="input-group">
+                    <input type="text" class="form-control inputMoney" placeholder="Add Money" aria-label="Add Money">
+                    <span class="input-group-btn">
+                    <button class="btn btn-secondary addMoney" type="button">Add</button>
+                    </span>
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    <div id="addPeople" style="display: none">
+      <div class="card-columns main">
+        <div class="card bg-light form ">
           <div class="card-body">
-            <h4 class="card-title"> {{person.name}} </h4>
-            <p class="card-text"> {{person.balance}} </p>
+                <h4 class="card-title">Name:</h4>
+                <div class="col-lg-6" style="padding-left:0px;">
+                  <div class="form-group">
+                    <input type="text" class="form-control theName" placeholder="You're name"> <br>
+                    <button type="submit" class="btn btn-default addName">Add Person</button>
+                  </div>
+            </div>
           </div>
         </div>
-      {% endfor %}
+          <div class="card bg-light plus">
+            <div class="card-body">
+              <button class="btn btn-default plusOnePerson" type="button">+</button>
+            </div>
+        </div>
     </div>
-    {% endif %}
-  <div id="addPeople">
-    <form action="{{path_for('home')}}" method="post" autocomplete="off">
-      <label for="name">Name</label>
-      <input type="text" name="name" id="name"><br />
-      <input type="submit" value="Submit">
-      {{ csrf_field() | raw }}
-    </form>
+  </div>
+  <div class="popup" style="display:none;">
+    <div class="popup-content">
+    <h1>Are you shyre?</h1>
+      <button class="btn btn-secondary" id="yes" type="button">Yes</button>
+        <button class="btn btn-secondary " id="no" type="button">No</button>
+    </div>
   </div>
   {% else %}
   nooooooooooooooooooooo?
   {% endif %}
+<script type="text/javascript">
+  $(document).ready(function(){
+    i = 0;
+    firstHTML = $('.card-columns').html();
+    $('#main').on('click','.addMoney',function(){
+      objectAdd = $(this);
+      var money = objectAdd.parents('.input-group').children('.inputMoney').val();
+      var name  = objectAdd.parents('.card-body').children('.card-title').text();
+      $.get("{{path_for('ajax-people-addMoney')}}",{money: money , name: name}, function(data){
+        if (data == 'true'){
+          objectAdd.parents('.card-body').css('border' , '1px solid orangered').html('<h1 style="text-align: center; color: orangered;">Success</h1>');
+        }
+      });
+    });
+    $('#main').on('click','.close',function(){
+      objectDelete = $(this);
+      $('.popup').fadeIn(300);
+      $('#no').click(function(){
+        $('.popup').fadeOut(300);
+      });
+      $('#yes').click(function(){
+        $('.popup').fadeOut(300);
+        var name = objectDelete.siblings('.card-title').text();
+        $.get("{{path_for('ajax-people-delete')}}",{name: name}, function(data){
+          if (data == 'true'){
+          objectDelete.parents('.bg-light').fadeOut(600);
+          }
+        });
+      });
+      $('.inputMoney').keypress(function (e) {
+        if (e.which !== 8 && e.which !== 0 && (e.which < 48 || e.which > 57))
+          return false;
+      });﻿
+    });
+
+    $('.addPeople').click(function(){
+      $('#showPeople').fadeOut(500);
+      $('#addPeople').fadeIn(500).css('padding-top','20px');
+      $('#main').on('click','.plusOnePerson',function(){//za klikanje na edno isto kopce poveke pati
+        var formHTML = " <div class='card-body'> <h4 class='card-title'>Name:</h4> <div class='col-lg-6' style='padding-left:0px;'> <div class='form-group'> <input type='text' class='form-control theName' placeholder='You're name'> <br> <button type='submit' class='btn btn-default addName'>Add Person</button> </div> </div> </div>";
+        var plusHTML = "<div class='card bg-light plus'><div class='card-body'><button class='btn btn-default plusOnePerson' type='button'>+</button> </div> </div>";
+        $(this).parents('.bg-light').html(formHTML).addClass('form').removeClass('plus');
+        $('.main').append(plusHTML);
+      });
+      $('#main').on('click','.addName',function(){
+        objectName = $(this);
+        var name = objectName.siblings('.theName').val();
+        $.get("{{path_for('ajax-people-add')}}",{name: name}, function(data){
+          if (data == 'true'){
+            objectName.parents('.card-body').css('border' , '1px solid orangered').html('<h1 style="text-align: center; color: orangered;">Success</h1>');
+          }
+        });
+      });
+    });
+
+    $('.search').keyup(function(){
+      if( i == 0){
+        $('.card-columns').fadeOut();
+      }
+      i+=1;
+      var key = $(this).val();
+      if(key != ''){
+        $.get("{{path_for('ajax-people-search')}}",{key: key}, function(data){
+          $('.card-columns').html(data).fadeIn();
+        });
+      }else{
+        $('.card-columns').html(firstHTML).fadeIn( "slow");
+        i=0;
+      }
+    });
+
+    $('#main').on('change','#checkbox ', function(){
+      if($(this).val() == 'on' ){
+        $('.bg-light').addClass('border-success');
+        $(this).val('no');
+      }else {
+        $('.bg-light').removeClass('border-success');
+        $(this).val('on');
+      }
+      $('#main').on('click','.bg-light', function(){
+        if($(this).hasClass('border-success')){
+          $(this).removeClass('border-success');
+        }else{
+          $(this).addClass('border-success');
+        }
+      });
+    });
+    $('.toolbox').hover(function () {
+    $(".toolbox div").animate({
+      'margin-top': "0px",
+      'visibility':'visible',
+      'padding-bottom': '1px'
+    },600);
+      },
+      function () {
+        $(".toolbox div").animate({
+          'margin-top': "-50px",
+          'visibility':'hidden',
+          'padding-bottom': '30px'
+        },600).css('border',' 0px solid orangered');
+      });
+
+
+  });
+
+  </script>
 {% endblock %}

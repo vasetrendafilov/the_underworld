@@ -1,6 +1,8 @@
 <?php
 namespace App\Auth;
 use App\Models\User;
+use App\Models\Payments;
+use App\Models\People;
 use Carbon\Carbon;
 
 class Auth
@@ -48,6 +50,35 @@ class Auth
 			unset($_SESSION[$this->config['auth.session']]);
 		}else{
 			unset($_SESSION[$this->config['auth.session']]);
+		}
+	}
+	public function expense()
+	{
+		$payments = Payments::where('user_id', $_SESSION[$this->config['auth.session']])->get();
+		$expense = 0;
+  	foreach ($payments as $payment) {
+  	  $expense += $payment->charge;
+  	}
+		return $expense;
+	}
+	public function peopleCash()
+	{
+    $people = People::where('user_id', $_SESSION[$this->config['auth.session']])->get();
+		$cash = 0;
+		foreach ($people as $person) {
+			$cash += $person->balance;
+		}
+		return $cash;
+	}
+	public function paymentsCheck()
+	{
+		$payments = Payments::where('user_id', $this->auth->user()->id)->orderBy('id')->get();
+    $cash = $this->peopleCash();
+		foreach ($payments as $payment) {
+			if (($cash - $payment->charge * $this->user()->people) >= 0) {
+				$payment->update(['done' => true]);
+				$cash = $cash - $payment->charge * $this->user()->people;
+			}
 		}
 	}
 }

@@ -1,28 +1,93 @@
 {%extends 'templates/app.twig'%}
 {% block head %}
   <link rel="stylesheet" href="/resources/css/payments.css">
+  <style media="screen">
+    .form-group{
+      margin: 0px;
+    }
+  </style>
 {% endblock %}
 {% block content %}
-  <div id="Payments">
   {% if payments is empty %}
-    <p>No payments </p>
+  <form action="{{path_for('payments')}}" method="post" autocomplete="off">
+
+    <div class="form-group">
+      <input type="text" name="description" class="form-control"  placeholder="Description...">
+    </div>
+    <div class="form-group">
+      <input type="text" name="charge" class="form-control charge"  >
+    </div>
+   <button type="submit" class="btn btn-default">Go</button>
+
+    {{ csrf_field() | raw }}
+  </form>
   {% else %}
+  <table class="table table-striped table-bordered ">
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Charge</th>
+      <th>Done</th>
+    </tr>
+  </thead>
+  <tbody>
     {% for payment in payments %}
-      <div class="row">
-        <div class="col-sm-8"> {{payment.description}} </div>
-        <div class="col-sm-4"> {{payment.charge}} </div>
-      </div>
+      <tr>
+        <td> {{payment.description}} </td>
+        <td> {{payment.charge * people }} </td>
+        {% if payment.done == true  %}
+          <td>
+            <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 0h24v24H0z" fill="none"/>
+              <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+            </svg>
+            <button type="button" class="close" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </td>
+        {% else %}
+          <td>
+            <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+            <button type="button" class="close" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </td>
+        {% endif %}
+      </tr>
     {% endfor %}
-  {% endif %}
-  </div>
-  <div id="addPayment">
+
     <form action="{{path_for('payments')}}" method="post" autocomplete="off">
-      <label for="description">Description</label>
-      <input type="text" name="description" id="description"><br />
-      <label for="value">Value</label>
-      <input type="text" name="charge" id="value"><br />
-      <input type="submit" value="Submit">
+      <tr>
+        <td> <div class="form-group"> <input type="text" name="description" class="form-control"  placeholder="Description..." style="width:90%;"> </div> </td>
+        <td> <div class="form-group"> <input type="text" name="charge" class="form-control charge" style="width:60px;" > </div> </td>
+        <td> <button type="submit" class="btn btn-default">Go</button> </td>
+      </tr>
       {{ csrf_field() | raw }}
     </form>
-  </div>
+
+  </tbody>
+  </table>
+  {% endif %}
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.close').click(function(){
+      mainObject = $(this);
+      description = mainObject.parents('td').siblings().first().text();
+      $.get("{{path_for('ajax-payments')}}",{description: description}, function(data){
+        if (data == 'true'){
+        mainObject.parents('tr').fadeOut(600);
+      }
+      });
+
+    });
+    $('.charge').keypress(function (e) {
+      if (e.which !== 8 && e.which !== 0 && (e.which < 48 || e.which > 57))
+        return false;
+      });﻿
+    $('.toolbox').css('visibility','hidden');  
+  });
+</script>
 {% endblock %}
