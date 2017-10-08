@@ -1,3 +1,15 @@
-#addPayment{
-  visibility: hidden;
+#table{
+  color: #fff;
+}
+#main{
+  padding-top: 100px;
+}
+.form-group{
+  margin: 0px;
+}
+.done{
+  border: 2px solid #88D317;
+}
+.btn{
+  margin-left: 10px;
 }

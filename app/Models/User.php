@@ -12,6 +12,7 @@ class User Extends Model
 		'name',
 		'email',
 		'password',
+		'school',
 		'people',
 		'active',
     'active_hash',

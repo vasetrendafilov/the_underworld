@@ -1,0 +1,74 @@
+#toolbox{
+  margin-top: 40px;
+}
+#hover_toolbox{
+  width: 100%;
+  height: 40px;
+}
+#box{
+  border-radius: 10px;
+  width: 100%;
+  padding: 15px 5px 5px 5px;
+  background:#F5F5F5;
+  display: none;
+}
+#dolg{
+font-size: 20px;
+}
+#dolg_svg{
+  margin-bottom: -10px;
+  margin-right: -5px;
+}
+.form-check-label{
+ border: 2px solid #0F1626;
+ border-radius: 10px;
+ padding-left: 25px;
+ padding-right: 5px;
+}
+.addPeople{
+  margin-left: 35%;
+  background: #0F1626;
+}
+.search{
+  float: right;
+  max-width: 200px;
+}
+.card-columns {
+  padding-top: 40px;
+}
+.bg-light{
+  border-width: 3px;
+}
+.card-columns > div{
+  background:  rgba(0, 0, 0, 0.7);
+}
+.popup {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  display: none; }
+
+.popup-content {
+  max-width: 500px;
+  max-height: 300px;
+  background: white;
+  border-radius: 4px;
+  display: block;
+  margin: 200px auto;
+  text-align: center;
+  padding: 40px 10px 40px 10px;
+ }
+
+.popup-content > h1 {
+  padding-bottom: 30px; }
+
+.popup-content > button {
+  margin-right: 20px;
+  padding: 12px 20px 12px 20px;
+  background-color: #0F1626;
+  border:0px;
+ }

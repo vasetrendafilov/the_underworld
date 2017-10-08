@@ -1,4 +1,7 @@
 {%extends 'templates/app.twig'%}
+{% block head %}
+<link rel="stylesheet" href= "{{baseUrl}}/resources/css/home.css">
+{% endblock %}
 {% block content %}
   {% if auth.check %}
     <div id="showPeople">
@@ -7,28 +10,45 @@
       {% else %}
       <div class="card-columns">
         {% for person in people %}
-          <div class="card bg-light ">
+          <div class="card bg-light">
             <div class="card-body">
               <button type="button" class="close" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
               <h4 class="card-title"> {{person.name}} </h4>
               {% if (expense - person.balance) <= 0 %}
-                <div class="card-text" >Wallet:</div>
+                <div class="card-text" >Паричник:</div>
                 <div class="card-text"> {{person.balance - expense }} </div>
               {% else %}
-                <div class="card-text" >Wallet:</div>
-                <div class="card-text"> {{ person.balance }} </div>
-                <div class="card-text" >Treba da doplati:</div>
-                <div class="card-text">{{ expense - person.balance }} </div>
-                <div class="col-lg-6" style="padding-left:0px;">
-                  <div class="input-group">
-                    <input type="text" class="form-control inputMoney" placeholder="Add Money" aria-label="Add Money">
-                    <span class="input-group-btn">
-                    <button class="btn btn-secondary addMoney" type="button">Add</button>
-                    </span>
-                  </div>
+                <div class="row" style="margin-bottom:20px;">
+                <div class="col"  data-toggle="tooltip" data-placement="right" title="Паричник"> <svg id="dolg_svg" fill="grey" height="36" viewBox="0 0 24 24" width="36" xmlns="http://www.w3.org/2000/svg">
+                                      <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+                                      <path d="M0 0h24v24H0z" fill="none"/>
+                                  </svg> <span id="dolg"> {{ person.balance }}  </span>  </div>
+                <div class="col" data-toggle="tooltip" data-placement="right" title="Долг"> <svg id="dolg_svg" fill="grey" height="36" viewBox="0 0 24 24" width="36" xmlns="http://www.w3.org/2000/svg">
+                                      <path d="M0 0h24v24H0z" fill="none"/>
+                                      <path d="M12.5 6.9c1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-.53.12-1.03.3-1.48.54l1.47 1.47c.41-.17.91-.27 1.51-.27zM5.33 4.06L4.06 5.33 7.5 8.77c0 2.08 1.56 3.21 3.91 3.91l3.51 3.51c-.34.48-1.05.91-2.42.91-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c.96-.18 1.82-.55 2.45-1.12l2.22 2.22 1.27-1.27L5.33 4.06z"/>
+                                  </svg> <span id="dolg"> {{ expense - person.balance }} </span></div>
                 </div>
+
+                <div class="col-lg-6" style="padding-left:0px; margin-bottom: 5px;">
+                  <div class="input-group">
+                    <input type="text" class="form-control inputMoney" placeholder="Пари" aria-label="Add Money">
+                    <span class="input-group-btn">
+                    <button class="btn btn-secondary addMoney" type="button" >Додај</button>
+                    </span>
+                </div>
+              </div>
+              <div class="col-lg-6" style="padding-left:0px;">
+                <div class="input-group">
+              <input type="text" class="form-control inputMoney" placeholder="Пари" aria-label="Sub Money">
+              <span class="input-group-btn">
+              <button class="btn btn-secondary subMoney" type="button">Одземи</button>
+              </span>
+            </div>
+
+
+        </div>
               {% endif %}
             </div>
           </div>
@@ -40,7 +60,7 @@
       <div class="card-columns main">
         <div class="card bg-light form ">
           <div class="card-body">
-                <h4 class="card-title">Name:</h4>
+                <h4 class="card-title" >Name:</h4>
                 <div class="col-lg-6" style="padding-left:0px;">
                   <div class="form-group">
                     <input type="text" class="form-control theName" placeholder="You're name"> <br>
@@ -56,18 +76,35 @@
         </div>
     </div>
   </div>
-  <div class="popup" style="display:none;">
+  <div class="popup">
     <div class="popup-content">
-    <h1>Are you shyre?</h1>
-      <button class="btn btn-secondary" id="yes" type="button">Yes</button>
-        <button class="btn btn-secondary " id="no" type="button">No</button>
+    <h1>Дали си сигурен?</h1>
+      <button class="btn btn-secondary" id="yes" type="button">Да</button>
+        <button class="btn btn-secondary " id="no" type="button">Не</button>
     </div>
   </div>
   {% else %}
-  nooooooooooooooooooooo?
+  <div class="card-columns">
+  {% for user in users %}
+  <div class="card bg-light">
+    <div class="card-body">
+        <h4 class="card-title"> {{user.name}} </h4>
+        <h4 class="card-text">Yciliste: {{user.school}} </h4>
+        <h4 class="card-text">Korisnici: {{user.people}} </h4>
+          <button type="submit" class="btn btn-default seePeople">Види Корисници</button>
+    </div>
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#toolbox').html('');
+      $('#main').css('padding-top','50px');
+    });
+  </script>
+  {% endfor %}
+  </div>
   {% endif %}
-<script type="text/javascript">
-  $(document).ready(function(){
+  <script type="text/javascript">
+    $(document).ready(function(){
     i = 0;
     firstHTML = $('.card-columns').html();
     $('#main').on('click','.addMoney',function(){
@@ -80,7 +117,27 @@
         }
       });
     });
-    $('#main').on('click','.close',function(){
+    $('#main').on('click','.subMoney',function(){
+      objectSub = $(this);
+      var money = objectSub.parents('.input-group').children('.inputMoney').val();
+      var name  = objectSub.parents('.card-body').children('.card-title').text();
+      $.get("{{path_for('ajax-people-subMoney')}}",{money: money , name: name}, function(data){
+        if (data == 'true'){
+          objectSub.parents('.card-body').css('border' , '1px solid orangered').html('<h1 style="text-align: center; color: orangered;">Success</h1>');
+        }
+      });
+    });
+    $('#showPeople').on('click','.close',function(){
+      $('#no').hover(function(){
+        $(this).css('background-color','#88D317');
+      },function(){
+        $(this).css('background-color','#0F1626');
+      });
+      $('#yes').hover(function(){
+        $(this).css('background-color','#FF533D');
+      },function(){
+        $(this).css('background-color','#0F1626');
+      });
       objectDelete = $(this);
       $('.popup').fadeIn(300);
       $('#no').click(function(){
@@ -103,7 +160,7 @@
 
     $('.addPeople').click(function(){
       $('#showPeople').fadeOut(500);
-      $('#addPeople').fadeIn(500).css('padding-top','20px');
+      $('#addPeople').delay(1000).fadeIn(500).css('padding-top','20px');
       $('#main').on('click','.plusOnePerson',function(){//za klikanje na edno isto kopce poveke pati
         var formHTML = " <div class='card-body'> <h4 class='card-title'>Name:</h4> <div class='col-lg-6' style='padding-left:0px;'> <div class='form-group'> <input type='text' class='form-control theName' placeholder='You're name'> <br> <button type='submit' class='btn btn-default addName'>Add Person</button> </div> </div> </div>";
         var plusHTML = "<div class='card bg-light plus'><div class='card-body'><button class='btn btn-default plusOnePerson' type='button'>+</button> </div> </div>";
@@ -121,6 +178,14 @@
       });
     });
 
+    $('.seePeople').click(function(){
+      var objectUsers = $(this);
+      var name = objectUsers.siblings('.card-title').text();
+      $('.card-columns').fadeOut();
+      $.get("{{path_for('ajax-people-see')}}",{name: name}, function(data){
+         objectUsers.parents('.card-columns').html(data).fadeIn();
+      });
+    });
     $('.search').keyup(function(){
       if( i == 0){
         $('.card-columns').fadeOut();
@@ -138,9 +203,13 @@
     });
 
     $('#main').on('change','#checkbox ', function(){
+      var formAdd = $('.col-lg-6').html();
+      var formSub = $('.col-lg-6').eq(1).html();
       if($(this).val() == 'on' ){
         $('.bg-light').addClass('border-success');
         $(this).val('no');
+        $('#showPeople').append(formAdd).append(formSub);
+        $('#select-show').html(formAdd).append(formSub);
       }else {
         $('.bg-light').removeClass('border-success');
         $(this).val('on');
@@ -153,23 +222,7 @@
         }
       });
     });
-    $('.toolbox').hover(function () {
-    $(".toolbox div").animate({
-      'margin-top': "0px",
-      'visibility':'visible',
-      'padding-bottom': '1px'
-    },600);
-      },
-      function () {
-        $(".toolbox div").animate({
-          'margin-top': "-50px",
-          'visibility':'hidden',
-          'padding-bottom': '30px'
-        },600).css('border',' 0px solid orangered');
-      });
-
-
   });
-
   </script>
+  <script type="text/javascript" src="{{baseUrl}}/resources/js/home.js"></script>
 {% endblock %}

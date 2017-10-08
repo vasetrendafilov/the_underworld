@@ -52,9 +52,13 @@ class Auth
 			unset($_SESSION[$this->config['auth.session']]);
 		}
 	}
-	public function expense()
+	public function expense($user = null )
 	{
-		$payments = Payments::where('user_id', $_SESSION[$this->config['auth.session']])->get();
+		if($user){
+			$payments = Payments::where('user_id',$user)->get();
+		}else{
+		  $payments = Payments::where('user_id',$_SESSION[$this->config['auth.session']])->get();
+    }
 		$expense = 0;
   	foreach ($payments as $payment) {
   	  $expense += $payment->charge;

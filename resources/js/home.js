@@ -1,3 +1,13 @@
 $(document).ready(function(){
-  $('div').css('border', '1px solid red');
+  $('#toolbox').hover(function() {
+    hovered = true;
+       setTimeout(function() {
+           if(hovered) {
+              $('#toolbox').children('#box').slideDown();
+           }
+       }, 250);//delay hover
+  },function () {
+     hovered = false;
+      $(this).children('#box').slideUp();
+  });
 });

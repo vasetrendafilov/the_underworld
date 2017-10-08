@@ -28,12 +28,25 @@ class AjaxController extends Controller
     }
     return 'false';
   }
+  public function getPeopleSub($request, $response)
+  {
+    $money = $request->getParam('money');
+    $name = $request->getParam('name');
+    if (isset($money) && !empty($money) && isset($name) && !empty($name)){
+    $person = People::where('name', trim($name))->first();
+    $person->update(['balance' => $person->balance - $money ]);
+    return 'true';
+    }
+    return 'false';
+  }
   public function getPeopleDelete($request, $response)
   {
     $name = $request->getParam('name');
     if (isset($name) && !empty($name)){
     $person = People::where('name', trim($name))->first();
     $person->delete();
+    $user = $this->auth->user();
+    $user->update(['people' => $user->people - 1]);
     return 'true';
     }
     return 'false';
@@ -53,6 +66,32 @@ class AjaxController extends Controller
     return 'true';
     }
     return 'false';
+  }
+  public function getPeopleSee($request, $response)
+  {
+    $name = $request->getParam('name');
+    if (isset($name) && !empty($name)){
+    $user = User::where('name', trim($name))->first();
+    $people = People::where('user_id', $user->id)->get();
+    foreach ($people as $person) {
+      $html = "<div class='card bg-light '>
+        <div class='card-body'>
+        <h4 class='card-title'> ".$person->name."</h4> ";
+        if (($this->auth->expense($user->id) - $person->balance) <= 0){
+            $html.= "<div class='card-text' >Wallet:</div>
+              <div class='card-text'> ".$person->balance - $this->auth->expense($user->id)." </div>";
+            }else{
+              $html.="
+              <div class='card-text' >Wallet:</div>
+              <div class='card-text'> ".$person->balance." </div>
+              <div class='card-text' >Treba da doplati:</div>
+              <div class='card-text'>". ($this->auth->expense($user->id) - $person->balance) ." </div>";
+            }
+            $html .=" </div> </div>";
+
+       echo $html;
+      }
+    }
   }
   public function getPeopleSearch($request, $response)
   {

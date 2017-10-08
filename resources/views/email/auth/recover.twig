@@ -1,5 +1,5 @@
 {% extends 'email/templates/default.twig' %}
 {% block content %}
-Recover you're password with this link:
+Поврати си го твојот акаунт со овеј линк:
 {{baseUrl}}{{path_for('password.reset')}}?email={{user.email}}&recover_hash={{recover_hash | url_encode}}
 {% endblock %}

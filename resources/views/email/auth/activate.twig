@@ -1,5 +1,5 @@
 {% extends 'email/templates/default.twig' %}
 {% block content %}
-Activate youre acc with this link:
+Aktiviraj go tvojot акаунт:
 {{baseUrl}}{{path_for('activate')}}?email={{user.email}}&activate={{activate | url_encode}}
 {% endblock %}

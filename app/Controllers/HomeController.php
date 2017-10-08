@@ -2,14 +2,17 @@
 
 namespace App\Controllers;
 use App\Models\People;
+use App\Models\User;
 
 class HomeController extends Controller
 {
   public function getPeople($request, $response)
   {
+    $users = User::where('active',true)->get();
     $people = People::where('user_id', $this->auth->user()->id)->get();
     return $this->view->render($response, 'home.twig',[
       'people' => $people,
+      'users'  => $users,
       'expense' => $this->auth->expense()
     ]);
   }

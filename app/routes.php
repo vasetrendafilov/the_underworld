@@ -22,12 +22,14 @@ $app->group('',function() use ($app){
   $app->get('/reset-password', 'UserController:getResetPassword')->setName('password.reset');
   $app->post('/reset-password', 'UserController:postResetPassword');
 
+  $app->get('/ajax/people/see', 'AjaxController:getPeopleSee')->setName('ajax-people-see');
 })->add(new GuestMiddleware($container));
 
 $app->group('',function() use ($app){
 
   $app->get('/ajax/payments', 'AjaxController:getPayments')->setName('ajax-payments');
   $app->get('/ajax/people', 'AjaxController:getPeople')->setName('ajax-people-addMoney');
+  $app->get('/ajax/people/sub', 'AjaxController:getPeopleSub')->setName('ajax-people-subMoney');
   $app->get('/ajax/people/delete', 'AjaxController:getPeopleDelete')->setName('ajax-people-delete');
   $app->get('/ajax/people/add', 'AjaxController:getPeopleAdd')->setName('ajax-people-add');
   $app->get('/ajax/people/search', 'AjaxController:getPeopleSearch')->setName('ajax-people-search');
@@ -37,7 +39,7 @@ $app->group('',function() use ($app){
 
   $app->get('/auth/signout', 'AuthController:getSignOut')->setName('auth.signout');
 
-  $app->get('/changePassword', 'UserController:getChangePassword')->setName('password.change');
-  $app->post('/changePassword', 'UserController:postChangePassword');
+  $app->get('/update/profile', 'UserController:getUpdate')->setName('update');
+  $app->post('/update/profile', 'UserController:postUpdate');
 
 })->add(new AuthMiddleware($container));

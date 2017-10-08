@@ -14,10 +14,10 @@ class Validator extends Violin
       $this->container = $container;
       $this->addFieldMessages([
         'email' =>[
-          'uniqueEmail' => 'That email i already taken'
+          'uniqueEmail' => 'Тој емаил е превземен'
         ],
         'username' =>[
-          'uniqueUsername' => 'That username i already taken'
+          'uniqueUsername' => 'Тоа корисничко име е превземено'
         ]
       ]);
       $this->addRuleMessages([

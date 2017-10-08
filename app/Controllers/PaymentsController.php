@@ -29,7 +29,7 @@ class PaymentsController extends Controller
         'charge' => $charge,
         'done' => false
       ]);
-        $this->flash->addMessage('info','You added another payment');
+        $this->flash->addMessage('info','Додадовте нова задача');
       return $response->withRedirect($this->router->pathFor('home'));
     }
   }

@@ -1,6 +1,71 @@
-#drzava{
-  font-size: 25px;
+body{
+background-image: url("http://localhost/Drzava.mk/resources/img/backgroundDark.jpg");
+height: 100%;
+background-size:cover;
 }
-#navbar{
+.navbar{
+    padding: 0;
+}
+#box{
+  display: none;
+}
+#home_link{
+  background-color:#F5F5F5;
+  margin:0;
   font-size: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+#payments_link{
+  background-color:#0F1626;
+  margin:0;
+  font-size: 20px;
+  color: white;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+#signout_link{
+  background-color:#FF533D;
+  margin:0;
+  font-size: 20px;
+  color: white;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+#signup_link{
+  background-color:#AB987A;
+  margin:0;
+  font-size: 20px;
+  color: white;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+#update_link{
+  background-color:#AB987A;
+  margin:0;
+  font-size: 20px;
+  color: white;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+#signin_link{
+  background-color:#FF533D;
+  margin:0;
+  font-size: 20px;
+  color: white;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+#colapse{
+  background-color:#F5F5F5;
+}
+#main {
+  padding-top: 20px;
+}
+#profile_text{
+display: block;
+}
+#profile_svg{
+  margin-left:  20px;
+  margin-bottom: -11px;
 }
