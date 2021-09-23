@@ -52,8 +52,12 @@ class Messages
      * @throws RuntimeException if the session cannot be found
      * @throws InvalidArgumentException if the store is not array-like
      */
-    public function __construct(&$storage = null)
+    public function __construct(&$storage = null, $storageKey = null)
     {
+        if (is_string($storageKey) && $storageKey) {
+            $this->storageKey = $storageKey;
+        }
+
         // Set storage
         if (is_array($storage) || $storage instanceof ArrayAccess) {
             $this->storage = &$storage;
@@ -144,6 +148,23 @@ class Messages
     }
 
     /**
+     * Get the first Flash message
+     *
+     * @param  string $key The key to get the message from
+     * @param  string $default Default value if key doesn't exist
+     * @return mixed Returns the message
+     */
+    public function getFirstMessage($key, $default = null)
+    {
+        $messages = self::getMessage($key);
+        if (is_array($messages) && count($messages) > 0) {
+            return $messages[0];
+        }
+
+        return $default;
+    }
+
+    /**
      * Has Flash Message
      *
      * @param string $key The key to get the message from
@@ -153,5 +174,41 @@ class Messages
     {
         $messages = $this->getMessages();
         return isset($messages[$key]);
+    }
+
+    /**
+     * Clear all messages
+     *
+     * @return void
+     */
+    public function clearMessages()
+    {
+        if (isset($this->storage[$this->storageKey])) {
+            $this->storage[$this->storageKey] = [];
+        }
+
+        $this->fromPrevious = [];
+        $this->forNow = [];
+    }
+
+    /**
+     * Clear specific message
+     *
+     * @param  String $key The key to clear
+     * @return void
+     */
+    public function clearMessage($key)
+    {
+        if (isset($this->storage[$this->storageKey][$key])) {
+            unset($this->storage[$this->storageKey][$key]);
+        }
+
+        if (isset($this->fromPrevious[$key])) {
+            unset($this->fromPrevious[$key]);
+        }
+
+        if (isset($this->forNow[$key])) {
+            unset($this->forNow[$key]);
+        }
     }
 }

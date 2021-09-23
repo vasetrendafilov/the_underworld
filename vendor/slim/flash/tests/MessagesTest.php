@@ -194,6 +194,24 @@ class MessagesTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['Test', 'Test2'], $flash->getMessage('Test'));
     }
 
+    //Test getting the first message from the key
+    public function testGetFirstMessageFromKey()
+    {
+        $storage = ['slimFlash' => [ 'Test' => ['Test', 'Test2']]];
+        $flash = new Messages($storage);
+
+        $this->assertEquals('Test', $flash->getFirstMessage('Test'));
+    }
+
+    //Test getting the default message if the key doesn't exist
+    public function testDefaultFromGetFirstMessageFromKeyIfKeyDoesntExist()
+    {
+        $storage = ['slimFlash' => []];
+        $flash = new Messages($storage);
+
+        $this->assertEquals('This', $flash->getFirstMessage('Test', 'This'));
+    }
+
     //Test getting the message from the key
     public function testGetMessageFromKeyIncludingCurrent()
     {
@@ -214,6 +232,51 @@ class MessagesTest extends \PHPUnit_Framework_TestCase
 
         $storage = ['slimFlash' => [ 'Test' => ['Test']]];
         $flash = new Messages($storage);
+        $this->assertTrue($flash->hasMessage('Test'));
+    }
+
+    public function testClearMessages()
+    {
+        $storage = ['slimFlash' => []];
+        $flash = new Messages($storage);
+
+        $storage = ['slimFlash' => [ 'Test' => ['Test']]];
+        $flash = new Messages($storage);
+        $flash->addMessageNow('Now', 'hear this');
+        $this->assertTrue($flash->hasMessage('Test'));
+        $this->assertTrue($flash->hasMessage('Now'));
+
+        $flash->clearMessages();
+        $this->assertFalse($flash->hasMessage('Test'));
+        $this->assertFalse($flash->hasMessage('Now'));
+    }
+
+    public function testClearMessage()
+    {
+        $storage = ['slimFlash' => []];
+        $flash = new Messages($storage);
+
+        $storage = ['slimFlash' => [ 'Test' => ['Test'], 'Foo' => ['Bar']]];
+        $flash = new Messages($storage);
+        $flash->addMessageNow('Now', 'hear this');
+        $this->assertTrue($flash->hasMessage('Test'));
+        $this->assertTrue($flash->hasMessage('Foo'));
+        $this->assertTrue($flash->hasMessage('Now'));
+
+        $flash->clearMessage('Test');
+        $flash->clearMessage('Now');
+        $this->assertFalse($flash->hasMessage('Test'));
+        $this->assertFalse($flash->hasMessage('Now'));
+        $this->assertTrue($flash->hasMessage('Foo'));
+    }
+
+    public function testSettingCustomStorageKey()
+    {
+        $storage = ['some-key' => [ 'Test' => ['Test']]];
+        $flash = new Messages($storage);
+        $this->assertFalse($flash->hasMessage('Test'));
+
+        $flash = new Messages($storage, 'some-key');
         $this->assertTrue($flash->hasMessage('Test'));
     }
 }

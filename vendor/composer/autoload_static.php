@@ -9,8 +9,8 @@ class ComposerStaticInitcffdc2e7cdc5fe59040200d3d98756f9
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
-        '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         '72579e7bd17821bb1321b87411366eae' => __DIR__ . '/..' . '/illuminate/support/helpers.php',
+        '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -57,10 +57,6 @@ class ComposerStaticInitcffdc2e7cdc5fe59040200d3d98756f9
         'D' => 
         array (
             'Doctrine\\Common\\Inflector\\' => 26,
-        ),
-        'C' => 
-        array (
-            'Carbon\\' => 7,
         ),
         'A' => 
         array (
@@ -149,14 +145,14 @@ class ComposerStaticInitcffdc2e7cdc5fe59040200d3d98756f9
         array (
             0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Common/Inflector',
         ),
-        'Carbon\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
-        ),
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
         ),
+    );
+
+    public static $fallbackDirsPsr4 = array (
+        0 => __DIR__ . '/..' . '/nesbot/carbon/src',
     );
 
     public static $prefixesPsr0 = array (
@@ -188,6 +184,17 @@ class ComposerStaticInitcffdc2e7cdc5fe59040200d3d98756f9
                 0 => __DIR__ . '/..' . '/pimple/pimple/src',
             ),
         ),
+        'D' => 
+        array (
+            'Detection' => 
+            array (
+                0 => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/namespaced',
+            ),
+        ),
+    );
+
+    public static $classMap = array (
+        'Mobile_Detect' => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/Mobile_Detect.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -195,7 +202,9 @@ class ComposerStaticInitcffdc2e7cdc5fe59040200d3d98756f9
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitcffdc2e7cdc5fe59040200d3d98756f9::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitcffdc2e7cdc5fe59040200d3d98756f9::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitcffdc2e7cdc5fe59040200d3d98756f9::$fallbackDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitcffdc2e7cdc5fe59040200d3d98756f9::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitcffdc2e7cdc5fe59040200d3d98756f9::$classMap;
 
         }, null, ClassLoader::class);
     }

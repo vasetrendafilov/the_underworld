@@ -42,6 +42,9 @@ $container['randomlib'] = function ($container){
     $randomlib = new RandomLib\Factory;
     return $randomlib->getMediumStrengthGenerator();
 };
+$container['device'] = function ($container){
+    return  new Mobile_Detect;
+};
 $container['hash'] = function ($container){
     return new \App\Helpers\Hash($container);
 };
@@ -60,6 +63,7 @@ $container['view'] = function ($container){
             'user' =>$container->auth->user(),
         ]);
     $view->getEnvironment()->addGlobal('flash', $container->flash);
+    $view->getEnvironment()->addGlobal('device', $container->device);
     $view->getEnvironment()->addGlobal('baseUrl', $container->config['app.baseUrl']);
     return $view;
 };
@@ -70,9 +74,6 @@ $container['Validator'] = function ($container){
 $container['HomeController'] = function($container){
     return new \App\Controllers\HomeController($container);
 };
-$container['PaymentsController'] = function($container){
-    return new \App\Controllers\PaymentsController($container);
-};
 $container['AjaxController'] = function($container){
     return new \App\Controllers\AjaxController($container);
 };
@@ -82,9 +83,13 @@ $container['AuthController'] = function($container){
 $container['UserController'] = function($container){
     return new \App\Controllers\UserController($container);
 };
+$container['AdminController'] = function($container){
+    return new \App\Controllers\AdminController($container);
+};
 $container['Mail'] = function($container){
   $mailer = new PHPMailer;
   $mailer->SMTPDebug =  $container->config['mail.smtp_debug'];
+  //voa bilo problemot $mail->isSMTP();na stranata
   $mailer->isSMTP();
   $mailer->Host =       $container->config['mail.host'];
   $mailer->SMTPAuth =   $container->config['mail.smtp_auth'];
@@ -92,8 +97,9 @@ $container['Mail'] = function($container){
   $mailer->Password =   $container->config['mail.password'];
   $mailer->SMTPSecure = $container->config['mail.smtp_secure'];
   $mailer->Port =       $container->config['mail.port'];
-  $mailer->setFrom('drzava.mk@gmail.com');
+  $mailer->setFrom($container->config['mail.username'],"The Underworld");
   $mailer->isHTML(true);
+  $mailer->CharSet = 'UTF-8';
   return new App\Mail\Mailer($container['view'], $mailer);
 };
 

@@ -1,57 +1,36 @@
 <?php
 
 namespace App\Controllers;
-use App\Models\User;
+use App\Models\User\User;
 
 class UserController extends Controller
 {
-  public function getUpdate($request, $response){
-    $user = $this->auth->user();
-    return $this->view->render($response, 'update/update.twig',[
-    'user' => $user
-    ]);
+  public function getUpdate($request, $response)
+  {
+    return $this->view->render($response, 'update/update.twig');
   }
   public function postUpdate($request, $response)
   {
-    $name = $request->getParam('name');
-    $school = $request->getParam('school');
     $password = $request->getParam('password');
     $password_new = $request->getParam('password_new');
     $password_confirm = $request->getParam('password_confirm');
-
     $v = $this->Validator->validate([
       'password'  => [$password,'required|min(6)|checkPassword'],
       'password_new' => [$password_new,'required|min(6)'],
       'password_confirm' => [$password_confirm,'required|matches(password_new)']
     ]);
     if ($v->passes()){
-      $user = $this->container->auth->user();
+      $user = $this->auth->user();
       $user->update([
       'password' => password_hash($password_new, PASSWORD_DEFAULT),
       ]);
-
-      $this->Mail->send('email/update/changed_password.twig',['user' => $user],function($message) use ($user){
-        $message->to($user->email);
-        $message->subject('Акаунт Упдејт');
-      });
-
-      $this->flash->addMessage('info','Твојата лозинка е променета');
-      return $response->withRedirect($this->router->pathFor('home'));
-    }else {
-      if(!empty($name)&&!empty($school)){
-        $user = $this->container->auth->user();
-        if($user->name != $name || $user->school != $school){
-          $user->update([
-          'name' => $name,
-          'school' => $school
-          ]);
-          $this->flash->addMessage('info','Персоналните детали се сменети');
-          return $response->withRedirect($this->router->pathFor('home'));
-        }
-      }
-      return $this->view->render($response, 'update/update.twig',['errors'  => $v->errors()]);
-
+      return $this->view->render($response, 'auth/signin.twig',[
+        'user' => ['Твојата лозинка е променета.','success']
+      ]);
     }
+    return $this->view->render($response, 'update/update.twig',[
+      'errors'  => $v->errors()
+    ]);
   }
   public function getRecoverPassword($request, $response)
   {
@@ -64,7 +43,7 @@ class UserController extends Controller
     if ($v->passes()){
       $user = User::where('email', $email)->first();
       if(!$user){
-        $this->flash->addMessage('error','Емаилот не се сопфаѓа');
+        $this->flash->addMessage('error','Вашата електронска пошта не се совпаѓа.');
         return $response->withRedirect($this->router->pathFor('password.recover'));
       }else{
         $recover_hash = $this->randomlib->generateString(128);
@@ -73,11 +52,12 @@ class UserController extends Controller
         ]);
         $this->Mail->send('email/auth/recover.twig',['user' => $user, 'recover_hash' => $recover_hash],function($message) use ($user){
           $message->to($user->email);
-          $message->subject('Повраити ја лозинката');
+          $message->subject('Поврати лозинка');
         });
-        $this->flash->addMessage('info','Ви пративме емаил деталите за враќање на лозинката се во пораката');
+        return $this->view->render($response, 'auth/signin.twig',[
+          'user' => ['Ви пративме дополнителни информации на вашата електронска пошта за промена на вашата лозинка','success']
+        ]);
       }
-      return $response->withRedirect($this->router->pathFor('home'));
     }else {
       return $this->view->render($response, 'update/recover_password.twig',[
         'errors'  => $v->errors()
@@ -109,8 +89,9 @@ class UserController extends Controller
       'password'     => password_hash($password, PASSWORD_DEFAULT),
       'recover_hash' => null
       ]);
-      $this->flash->addMessage('info','Лозинката е успешно променета');
-      return $response->withRedirect($this->router->pathFor('home'));
+      return $this->view->render($response, 'auth/signin.twig',[
+        'user' => ['Лозинката е успешно променета','success']
+      ]);
     }
   }
   public function zastita($request, $response)

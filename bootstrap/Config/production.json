@@ -1,6 +1,7 @@
 {
   "app":{
-    "baseUrl" : "http://mktechportal.con.mk/",
+    "baseUrl" : "https://theunderworldve.000webhostapp.com/",
+    "recaptcha":"6LeVuSoUAAAAACG7LW0ii_PAQBpM9yokuqFC6PdX",
     "hash":{
       "algo": "PASSWORD_BCRYPT",
       "cost": 10
@@ -8,10 +9,10 @@
   },
   "db":{
     "driver":"mysql",
-    "host":"sql103.con.mk",
-    "database":"mkd_18989075_vase",
-    "username":"mkd_18989075",
-    "password":"joker11",
+    "host":"localhost",
+    "database":"****",
+    "username":"****",
+    "password":"****!",
     "collation":"utf_unicode_ci",
     "prefix":""
   },
@@ -19,8 +20,8 @@
     "smtp_debug": 2,
     "host": "smtp.gmail.com",
     "smtp_auth": true,
-    "username": "drzava.mk@gmail.com",
-    "password": "Vase0137",
+    "username": "***",
+    "password": "***",
     "smtp_secure": "tls",
     "port": 587
   },

@@ -1,0 +1,290 @@
+{
+  "settings": [
+    {
+      "id": "358FB51AD5AAFAE6C4E9940CFE96FAD33FDE522BBD89F941DCBEBA2058A2DF23",
+      "partitionKey": "1003200097890D02",
+      "environment": "default",
+      "tenant": "b24dfd9b-cdde-4175-91b7-102e0bcf8e04",
+      "store": "General",
+      "settingKey": "landingPage",
+      "data": 1,
+      "_rid": "DnIFAOpieQCjrEIAAABACA==",
+      "_self": "dbs/DnIFAA==/colls/DnIFAOpieQA=/docs/DnIFAOpieQCjrEIAAABACA==/",
+      "_etag": "\"ea008dc3-0000-0200-0000-5e49273b0000\"",
+      "_attachments": "attachments/",
+      "_ts": 1581852475
+    },
+    {
+      "id": "FA77952649651EB3DCBD95CAA7D278BB54744F061B62692A0DB87633A619C41D",
+      "partitionKey": "1003200097890D02",
+      "environment": "default",
+      "tenant": "b24dfd9b-cdde-4175-91b7-102e0bcf8e04",
+      "store": "General",
+      "settingKey": "fxs-theme",
+      "data": {
+        "colorCode": "#333",
+        "imageUri": "https://portal.azure.com/Content/5.0.303.2003073.200213-1642/Images/MsPortalImpl/Themes/Theme_Dark.png",
+        "svg": {
+          "type": 381,
+          "options": {
+            "isLogo": true
+          }
+        },
+        "name": "dark",
+        "title": "Dark",
+        "mode": 1
+      },
+      "_rid": "DnIFAOpieQCkrEIAAABACA==",
+      "_self": "dbs/DnIFAA==/colls/DnIFAOpieQA=/docs/DnIFAOpieQCkrEIAAABACA==/",
+      "_etag": "\"350149c8-0000-0200-0000-5e4994760000\"",
+      "_attachments": "attachments/",
+      "_ts": 1581880438
+    },
+    {
+      "id": "DD138D930EC41FC2EC0EFBBC45C5FC082020CD4FAC365D39F342295DCBFE7B76",
+      "partitionKey": "1003200097890D02",
+      "environment": "default",
+      "tenant": "b24dfd9b-cdde-4175-91b7-102e0bcf8e04",
+      "store": "Startboard",
+      "settingKey": "sprint2",
+      "data": {
+        "startBoardId": "Startboard"
+      },
+      "_rid": "DnIFAOpieQClrEIAAABACA==",
+      "_self": "dbs/DnIFAA==/colls/DnIFAOpieQA=/docs/DnIFAOpieQClrEIAAABACA==/",
+      "_etag": "\"ea00a8c3-0000-0200-0000-5e49273b0000\"",
+      "_attachments": "attachments/",
+      "_ts": 1581852475
+    },
+    {
+      "id": "19545EC8BC0C2BA319C3BB4B551D128B1A23184A722D9AF373F56E9F4FD093FE",
+      "partitionKey": "1003200097890D02",
+      "environment": "default",
+      "tenant": "b24dfd9b-cdde-4175-91b7-102e0bcf8e04",
+      "store": "HubsExtension",
+      "settingKey": "subscriptions_selected",
+      "data": "2bb6123e-cc32-496b-bdc3-594d0cd746ec",
+      "_rid": "DnIFAOpieQCmrEIAAABACA==",
+      "_self": "dbs/DnIFAA==/colls/DnIFAOpieQA=/docs/DnIFAOpieQCmrEIAAABACA==/",
+      "_etag": "\"ea00b7c3-0000-0200-0000-5e49273b0000\"",
+      "_attachments": "attachments/",
+      "_ts": 1581852475
+    },
+    {
+      "id": "A6FEDBA0999175EE46B393BFA7C63397E263F21BE06AE8E34C1F38EEE044BAF2",
+      "partitionKey": "1003200097890D02",
+      "environment": "default",
+      "tenant": "b24dfd9b-cdde-4175-91b7-102e0bcf8e04",
+      "store": "Favorites",
+      "settingKey": "favorites",
+      "data": "[\"HubsExtension_BrowseAllResources\",\"HubsExtension_ResourceGroups\",\"Microsoft_Azure_Resources_Quickstart\",\"WebsitesExtension_Website\",\"WebsitesExtension_Website.functionapp\",\"SqlAzureExtension_Database\",\"Microsoft_Azure_DocumentDB_DocumentDBDatabaseAccount\",\"Microsoft_Azure_Compute_VirtualMachine\",\"Microsoft_Azure_Network_LoadBalancer\",\"Microsoft_Azure_Storage_StorageAccount\",\"Microsoft_Azure_Network_VirtualNetwork\",\"Microsoft_AAD_IAM_AzureActiveDirectory\",\"Microsoft_Azure_Monitoring_AzureMonitoring\",\"Microsoft_Azure_Expert_AzureAdvisor\",\"Microsoft_Azure_Security_SecurityDashboard\",\"Microsoft_Azure_GTM_Billing\",\"Microsoft_Azure_Support_HelpAndSupport\"]",
+      "_rid": "DnIFAOpieQCnrEIAAABACA==",
+      "_self": "dbs/DnIFAA==/colls/DnIFAOpieQA=/docs/DnIFAOpieQCnrEIAAABACA==/",
+      "_etag": "\"ea00c3c3-0000-0200-0000-5e49273b0000\"",
+      "_attachments": "attachments/",
+      "_ts": 1581852475
+    },
+    {
+      "id": "B79415DFC201E1F027D28E37FA73EFF5C49C218C16E20B0CB82394D6A91F00F2",
+      "partitionKey": "1003200097890D02",
+      "environment": "default",
+      "store": "FirstVisited",
+      "settingKey": "FirstVisitedTimestamp",
+      "data": 1581852472051,
+      "_rid": "DnIFAOpieQCorEIAAABACA==",
+      "_self": "dbs/DnIFAA==/colls/DnIFAOpieQA=/docs/DnIFAOpieQCorEIAAABACA==/",
+      "_etag": "\"ea00cfc3-0000-0200-0000-5e49273b0000\"",
+      "_attachments": "attachments/",
+      "_ts": 1581852475
+    },
+    {
+      "id": "6EFFC0F96357DF90F6AA33EE737AE43C3E1E923302144EE6D82D051D2A1E5150",
+      "partitionKey": "1003200097890D02",
+      "environment": "default",
+      "store": "CrossTenant",
+      "settingKey": "userDefaultDirectory",
+      "data": {
+        "id": "b24dfd9b-cdde-4175-91b7-102e0bcf8e04",
+        "displayName": "FEIT Skopje",
+        "domainName": "feit.ukim.edu.mk"
+      },
+      "_rid": "DnIFAOpieQCprEIAAABACA==",
+      "_self": "dbs/DnIFAA==/colls/DnIFAOpieQA=/docs/DnIFAOpieQCprEIAAABACA==/",
+      "_etag": "\"ea000dc4-0000-0200-0000-5e49273c0000\"",
+      "_attachments": "attachments/",
+      "_ts": 1581852476
+    },
+    {
+      "id": "1A89E155AA7FC22B831EF83B1D8A13C288E85FBC59CCF409FC06901A9208DAF9",
+      "partitionKey": "1003200097890D02",
+      "environment": "default",
+      "tenant": "b24dfd9b-cdde-4175-91b7-102e0bcf8e04",
+      "store": "Recents",
+      "settingKey": "recentServices",
+      "data": {
+        "version": 1,
+        "data": [
+          {
+            "assetId": "hubsextension_browseallresources",
+            "timeStamp": 1581853183507
+          },
+          {
+            "assetId": "websitesextension_website.functionapp",
+            "timeStamp": 1581852586041
+          },
+          {
+            "assetId": "microsoft_azure_compute_virtualmachine",
+            "timeStamp": 1581852571493
+          }
+        ]
+      },
+      "_rid": "DnIFAOpieQCrrEIAAABACA==",
+      "_self": "dbs/DnIFAA==/colls/DnIFAOpieQA=/docs/DnIFAOpieQCrrEIAAABACA==/",
+      "_etag": "\"ec00ac46-0000-0200-0000-5e492a040000\"",
+      "_attachments": "attachments/",
+      "_ts": 1581853188
+    },
+    {
+      "id": "265B14F91B0CBD4BF76AD2F05F4E7409EF8697E3538ABD643EA08A326B568557",
+      "partitionKey": "1003200097890D02",
+      "environment": "default",
+      "tenant": "b24dfd9b-cdde-4175-91b7-102e0bcf8e04",
+      "store": "General",
+      "settingKey": "searchHistory",
+      "data": "[\"computer vision\"]",
+      "_rid": "DnIFAOpieQCwrEIAAABACA==",
+      "_self": "dbs/DnIFAA==/colls/DnIFAOpieQA=/docs/DnIFAOpieQCwrEIAAABACA==/",
+      "_etag": "\"eb00ee20-0000-0200-0000-5e4927eb0000\"",
+      "_attachments": "attachments/",
+      "_ts": 1581852651
+    },
+    {
+      "id": "64AC5AD831490840F41E8857904EE7BB60E15EC2D3346617394E7579BE317D90",
+      "partitionKey": "1003200097890D02",
+      "environment": "default",
+      "tenant": "b24dfd9b-cdde-4175-91b7-102e0bcf8e04",
+      "store": "HubsExtension",
+      "settingKey": "gallery_create_lastDeployed_galleryItems",
+      "data": {
+        "Microsoft.CognitiveServicesComputerVision": 1581853048884
+      },
+      "_rid": "DnIFAOpieQD6rEIAAABACA==",
+      "_self": "dbs/DnIFAA==/colls/DnIFAOpieQA=/docs/DnIFAOpieQD6rEIAAABACA==/",
+      "_etag": "\"eb003cfe-0000-0200-0000-5e49297e0000\"",
+      "_attachments": "attachments/",
+      "_ts": 1581853054
+    },
+    {
+      "id": "A894FF4BBFDFE4C8697F4DF2F902EA92CB57F95CAB34EEAC5D086EF54253166E",
+      "partitionKey": "1003200097890D02",
+      "environment": "default",
+      "tenant": "b24dfd9b-cdde-4175-91b7-102e0bcf8e04",
+      "store": "HubsExtension",
+      "settingKey": "gallery_createLauncher_lastUsed_resourceGroupLocation",
+      "data": "francecentral",
+      "_rid": "DnIFAOpieQD7rEIAAABACA==",
+      "_self": "dbs/DnIFAA==/colls/DnIFAOpieQA=/docs/DnIFAOpieQD7rEIAAABACA==/",
+      "_etag": "\"eb0063fe-0000-0200-0000-5e49297f0000\"",
+      "_attachments": "attachments/",
+      "_ts": 1581853055
+    },
+    {
+      "id": "3173BDFB4A0314BA8022C2F5D7420391ABD11D0A695395273D068947D7E2B03A",
+      "partitionKey": "1003200097890D02",
+      "environment": "default",
+      "tenant": "b24dfd9b-cdde-4175-91b7-102e0bcf8e04",
+      "store": "HubsExtension",
+      "settingKey": "deployments_lastUsed_locations",
+      "data": {
+        "francecentral": 1581853048885
+      },
+      "_rid": "DnIFAOpieQD8rEIAAABACA==",
+      "_self": "dbs/DnIFAA==/colls/DnIFAOpieQA=/docs/DnIFAOpieQD8rEIAAABACA==/",
+      "_etag": "\"eb0070fe-0000-0200-0000-5e49297f0000\"",
+      "_attachments": "attachments/",
+      "_ts": 1581853055
+    },
+    {
+      "id": "42E75359756C2C61C98411C9C2EE82B242ACBEE4F49BB05ABD9FC933DFC0A4C6",
+      "partitionKey": "1003200097890D02",
+      "environment": "default",
+      "tenant": "b24dfd9b-cdde-4175-91b7-102e0bcf8e04",
+      "store": "HubsExtension",
+      "settingKey": "gallery_createLauncher_lastUsed_subscriptionId",
+      "data": "2bb6123e-cc32-496b-bdc3-594d0cd746ec",
+      "_rid": "DnIFAOpieQD9rEIAAABACA==",
+      "_self": "dbs/DnIFAA==/colls/DnIFAOpieQA=/docs/DnIFAOpieQD9rEIAAABACA==/",
+      "_etag": "\"eb007ffe-0000-0200-0000-5e49297f0000\"",
+      "_attachments": "attachments/",
+      "_ts": 1581853055
+    },
+    {
+      "id": "C3056C3658B4CD870E8FDFA6A7F0F29358891E395C5E5098126903A97C212B2E",
+      "partitionKey": "1003200097890D02",
+      "environment": "default",
+      "tenant": "b24dfd9b-cdde-4175-91b7-102e0bcf8e04",
+      "store": "HubsExtension",
+      "settingKey": "browse_recentResources",
+      "data": {
+        "version": 1.1,
+        "data": [
+          {
+            "resourceId": "/subscriptions/2bb6123e-cc32-496b-bdc3-594d0cd746ec/resourceGroups/python/providers/Microsoft.CognitiveServices/accounts/python-img-analyzer",
+            "timeStamp": 1581880344461,
+            "location": "francecentral",
+            "resourceKind": "computervision"
+          }
+        ]
+      },
+      "_rid": "DnIFAOpieQAJrUIAAABACA==",
+      "_self": "dbs/DnIFAA==/colls/DnIFAOpieQA=/docs/DnIFAOpieQAJrUIAAABACA==/",
+      "_etag": "\"3501dbb9-0000-0200-0000-5e4994270000\"",
+      "_attachments": "attachments/",
+      "_ts": 1581880359
+    },
+    {
+      "id": "F1D76882F21F16935D33CE26EA841340ACB087AA5B91029EDF4A7C9CDB5D7E53",
+      "partitionKey": "1003200097890D02",
+      "environment": "default",
+      "tenant": "b24dfd9b-cdde-4175-91b7-102e0bcf8e04",
+      "store": "HubsExtension",
+      "settingKey": "recommendations_lastFetchTimestamp",
+      "data": {
+        "2bb6123e-cc32-496b-bdc3-594d0cd746ec": "2020-02-16T11:50:26.728Z"
+      },
+      "_rid": "DnIFAOpieQAWrUIAAABACA==",
+      "_self": "dbs/DnIFAA==/colls/DnIFAOpieQA=/docs/DnIFAOpieQAWrUIAAABACA==/",
+      "_etag": "\"ee001f6f-0000-0200-0000-5e492df30000\"",
+      "_attachments": "attachments/",
+      "_ts": 1581854195
+    },
+    {
+      "id": "FBB29122F67C82AB5CEF2212EF5BE8B6E3B65710F956ADA469EAB44CBB693D52",
+      "partitionKey": "1003200097890D02",
+      "environment": "default",
+      "tenant": "b24dfd9b-cdde-4175-91b7-102e0bcf8e04",
+      "store": "Favorites",
+      "settingKey": "version",
+      "data": 2,
+      "_rid": "DnIFAOpieQAbukIAAABACA==",
+      "_self": "dbs/DnIFAA==/colls/DnIFAOpieQA=/docs/DnIFAOpieQAbukIAAABACA==/",
+      "_etag": "\"3501f3b5-0000-0200-0000-5e4994130000\"",
+      "_attachments": "attachments/",
+      "_ts": 1581880339
+    },
+    {
+      "id": "8789831F23B0BB34A9DE8AA7B3277BEA5C0B07D566F44CEBE6668A839A3DBAF5",
+      "partitionKey": "1003200097890D02",
+      "environment": "default",
+      "tenant": "b24dfd9b-cdde-4175-91b7-102e0bcf8e04",
+      "store": "General",
+      "settingKey": "highContrastKey",
+      "data": 0,
+      "_rid": "DnIFAOpieQAnukIAAABACA==",
+      "_self": "dbs/DnIFAA==/colls/DnIFAOpieQA=/docs/DnIFAOpieQAnukIAAABACA==/",
+      "_etag": "\"350151c8-0000-0200-0000-5e4994760000\"",
+      "_attachments": "attachments/",
+      "_ts": 1581880438
+    }
+  ]
+}

@@ -1,8 +1,7 @@
 <?php
 namespace App\Auth;
-use App\Models\User;
-use App\Models\Payments;
-use App\Models\People;
+use App\Models\User\User;
+use App\Models\Clan;
 use Carbon\Carbon;
 
 class Auth
@@ -29,7 +28,10 @@ class Auth
 	{
 		$user = User::where('username', $username)->where('active', true)->first();
 		if(!$user){
-			return false;
+			if(User::where('username', $username)->where('active', false)->first()){
+				return 2;
+			}
+			return 1;
 		}
 		if(password_verify($password, $user->password)){
 			if($remember === 'on'){
@@ -39,11 +41,17 @@ class Auth
 				setcookie($this->config['auth.remember'], "{$rememberIdentifier}___{$rememberToken}", Carbon::parse('+1 week ')->timestamp,'/');
       }
 			$_SESSION[$this->config['auth.session']] = $user->id;
-			return true;
+ 			$clan = Clan::where('name',$user->contact->clan)->first();
+			if($clan){$clan->refreshStats();}
+			$user->energy->calculateEnergy();
+			$user->energy->update(['status' => 1 ]);
+			return 3;
 		}
+		return 1;
 	}
 	public function logout()
 	{
+    $this->user()->energy->update(['status' => 0 ]);
 		if(isset($_COOKIE[$this->config['auth.remember']])){
       $this->user()->removeRememberCredentials();
 			setcookie($this->config['auth.remember'], null, 1, "/", null);
@@ -52,37 +60,5 @@ class Auth
 			unset($_SESSION[$this->config['auth.session']]);
 		}
 	}
-	public function expense($user = null )
-	{
-		if($user){
-			$payments = Payments::where('user_id',$user)->get();
-		}else{
-		  $payments = Payments::where('user_id',$_SESSION[$this->config['auth.session']])->get();
-    }
-		$expense = 0;
-  	foreach ($payments as $payment) {
-  	  $expense += $payment->charge;
-  	}
-		return $expense;
-	}
-	public function peopleCash()
-	{
-    $people = People::where('user_id', $_SESSION[$this->config['auth.session']])->get();
-		$cash = 0;
-		foreach ($people as $person) {
-			$cash += $person->balance;
-		}
-		return $cash;
-	}
-	public function paymentsCheck()
-	{
-		$payments = Payments::where('user_id', $this->auth->user()->id)->orderBy('id')->get();
-    $cash = $this->peopleCash();
-		foreach ($payments as $payment) {
-			if (($cash - $payment->charge * $this->user()->people) >= 0) {
-				$payment->update(['done' => true]);
-				$cash = $cash - $payment->charge * $this->user()->people;
-			}
-		}
-	}
+
 }

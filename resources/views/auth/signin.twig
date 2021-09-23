@@ -3,32 +3,40 @@
 <link rel="stylesheet" href= "{{baseUrl}}/resources/css/auth/signin.css">
 {% endblock %}
 {% block content %}
-<div class="row" id="margin">
-       <div class="col-md-4 col-md-offset-4">
-           <div class="panel panel-default">
-             <div class="panel-body">
-               <h2>Логин</h2>
-           </div>
-           <div class="panel-body">
-        <form action="{{path_for('auth.signin')}}" method="post" autocomplete="off">
-        <div class="form-group">
-          <input type="text"  id="username" placeholder="Корисничко Име" name="username" value="{{ request.username }}"/>
-        </div>
-        <div class="form-group">
-          <input type="password"  id="password" placeholder="Лозинка" name="password" >
-        </div>
-      {{ csrf_field() | raw }}
-        <label class="form-check-label">
-          <input class="form-check-input" type="checkbox" value="on" id="checkbox">
-          Запомни Ме
-        </label>
-        <div id="fotgot_password">
-        <a href="{{path_for('password.recover')}}">Заборави Лозинка?</a>
-        </div>
-    <button type="submit" class="hvr-buzz-out">Sign In</button>
-</form>
-</div>
-      </div>
-      </div>
+{% if user %}
+  <div class="container">
+    <div class="alert alert-{{user[1]}}">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Затвори">
+  	    <span aria-hidden="true">&times;</span>
+      </button>
+    {% if not user[0].id %}
+      {{user[0]}}
+    {% else %}
+    	Treba da go aktiviras profilot <a href="{{path_for('send.active')}}?name={{user[0].username}}">PratiAktivacija</a>
+    {% endif %}
+  	</div>
   </div>
+{% endif %}
+<div class="row">
+  <div class="col-md-5 col-md-offset-5">
+      <h2>Најава</h2>
+        <form action="{{path_for('auth.signin')}}" method="post">
+          <div class="form-group">
+            <label for="username">Корисничко Име</label>
+            <input type="text" class="form-control"  name="username" placeholder="Внеси Име" value="{{ request.username }}"/>
+          </div>
+          <div class="form-group">
+            <label for="password">Лозинка</label>
+            <input type="password" class="form-control"  name="password" placeholder="Внеси Лозинка"/>
+          </div>
+          <div class="form-group custom-control custom-checkbox">
+            <input class="custom-control-input" type="checkbox" value="on" name="remember" id="remember">
+            <label for="remember" class="custom-control-label">Запомни Ме</label>
+            <a class="forgot-pass" href="{{path_for('password.recover')}}">Заборави Лозинка?</a>
+          </div>
+          <button type="submit" class="btn btn-danger">Најави се</button>
+          {{ csrf_field() | raw }}
+        </form>
+  </div>
+</div>
 {% endblock %}
